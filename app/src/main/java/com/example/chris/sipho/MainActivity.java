@@ -36,9 +36,12 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        photoImageView = (ImageView) findViewById(R.id.photoImageView);
-        nameTextView = (TextView) findViewById(R.id.nameTextView3);
-        idTextView = (TextView) findViewById(R.id.idTextView);
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        View hView =  navigationView.getHeaderView(0);
+
+        photoImageView = (ImageView) hView.findViewById(R.id.photoImageView);
+        nameTextView = (TextView) hView.findViewById(R.id.nameTextView);
+        idTextView = (TextView) hView.findViewById(R.id.idTextView);
 
         profileTracker = new ProfileTracker() {
             @Override
@@ -78,7 +81,7 @@ public class MainActivity extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        //NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
 
