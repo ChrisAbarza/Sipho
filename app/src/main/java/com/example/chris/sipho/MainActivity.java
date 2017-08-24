@@ -13,20 +13,51 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.facebook.AccessToken;
+import com.facebook.Profile;
+import com.facebook.ProfileTracker;
 import com.facebook.login.LoginManager;
+import com.bumptech.glide.Glide;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private ImageView photoImageView;
+    private TextView nameTextView;
+    private TextView idTextView;
+
+    private ProfileTracker profileTracker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        photoImageView = (ImageView) findViewById(R.id.photoImageView);
+        nameTextView = (TextView) findViewById(R.id.nameTextView3);
+        idTextView = (TextView) findViewById(R.id.idTextView);
+
+        profileTracker = new ProfileTracker() {
+            @Override
+            protected void onCurrentProfileChanged (Profile oldProfile, Profile currentProfile) {
+                if (currentProfile != null) {
+                    displayProfileInfo(currentProfile);
+                }
+            }
+        };
+
         if (AccessToken.getCurrentAccessToken() == null){
             goLoginScreen();
+        }else {
+            Profile profile = Profile.getCurrentProfile();
+            if (profile != null) {
+                displayProfileInfo(profile);
+            } else {
+                Profile.fetchProfileForCurrentAccessToken();
+            }
         }
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -61,6 +92,19 @@ public class MainActivity extends AppCompatActivity
     public void logout(View view){
         LoginManager.getInstance().logOut();
         goLoginScreen();
+    }
+
+    private void displayProfileInfo(Profile profile) {
+        String id = profile.getId();
+        String name = profile.getName();
+        String photoUrl = profile.getProfilePictureUri(100, 100).toString();
+
+        nameTextView.setText(name);
+        idTextView.setText(id);
+
+        Glide.with(getApplicationContext())
+                .load(photoUrl)
+                .into(photoImageView);
     }
 
     @Override
@@ -122,4 +166,11 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        profileTracker.stopTracking();
+    }
 }
+
