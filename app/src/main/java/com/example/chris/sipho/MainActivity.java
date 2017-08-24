@@ -22,6 +22,8 @@ import com.facebook.ProfileTracker;
 import com.facebook.login.LoginManager;
 import com.bumptech.glide.Glide;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -39,7 +41,7 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         View hView =  navigationView.getHeaderView(0);
 
-        photoImageView = (ImageView) hView.findViewById(R.id.photoImageView);
+        photoImageView = (CircleImageView) hView.findViewById(R.id.photoImageView);
         nameTextView = (TextView) hView.findViewById(R.id.nameTextView);
         idTextView = (TextView) hView.findViewById(R.id.idTextView);
 
