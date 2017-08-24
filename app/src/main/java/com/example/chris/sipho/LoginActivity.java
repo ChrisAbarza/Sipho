@@ -33,7 +33,7 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onCancel() {
-                Toast.makeText(LoginActivity.this, "Error", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, "Cancelado", Toast.LENGTH_SHORT).show();
 
             }
 
