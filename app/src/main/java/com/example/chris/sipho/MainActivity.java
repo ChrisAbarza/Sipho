@@ -1,9 +1,15 @@
 package com.example.chris.sipho;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -15,6 +21,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.facebook.AccessToken;
 import com.facebook.Profile;
@@ -40,6 +47,7 @@ public class MainActivity extends AppCompatActivity
     private ImageView photoImageView;
     private TextView nameTextView;
     private TextView idTextView;
+    private final static int MY_PERMISSION_FINE_LOCATION = 101;
 
     private ProfileTracker profileTracker;
 
@@ -49,7 +57,7 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        View hView =  navigationView.getHeaderView(0);
+        View hView = navigationView.getHeaderView(0);
 
         photoImageView = (CircleImageView) hView.findViewById(R.id.photoImageView);
         nameTextView = (TextView) hView.findViewById(R.id.nameTextView);
@@ -57,16 +65,16 @@ public class MainActivity extends AppCompatActivity
 
         profileTracker = new ProfileTracker() {
             @Override
-            protected void onCurrentProfileChanged (Profile oldProfile, Profile currentProfile) {
+            protected void onCurrentProfileChanged(Profile oldProfile, Profile currentProfile) {
                 if (currentProfile != null) {
                     displayProfileInfo(currentProfile);
                 }
             }
         };
 
-        if (AccessToken.getCurrentAccessToken() == null){
+        if (AccessToken.getCurrentAccessToken() == null) {
             goLoginScreen();
-        }else {
+        } else {
             Profile profile = Profile.getCurrentProfile();
             if (profile != null) {
                 displayProfileInfo(profile);
@@ -96,7 +104,7 @@ public class MainActivity extends AppCompatActivity
         //NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        SupportMapFragment mapFragment= (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
 
         mapFragment.getMapAsync(this);
 
@@ -108,7 +116,8 @@ public class MainActivity extends AppCompatActivity
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
-    public void logout(View view){
+
+    public void logout(View view) {
         LoginManager.getInstance().logOut();
         goLoginScreen();
     }
@@ -185,6 +194,7 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -199,6 +209,46 @@ public class MainActivity extends AppCompatActivity
         map.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
         map.moveCamera(CameraUpdateFactory.newLatLng(sydney));
 
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+
+            map.setMyLocationEnabled(true);
+
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+
+        } else {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, MY_PERMISSION_FINE_LOCATION);
+            }
+
+
+        }
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case MY_PERMISSION_FINE_LOCATION:
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                        
+                        map.setMyLocationEnabled(true);
+                    }
+
+
+                }else{
+                    Toast.makeText(getApplicationContext(), "Dáme los permisos o moriré", Toast.LENGTH_LONG).show();
+                    finish();
+
+                }
+                break;
+        }
     }
 }
 
