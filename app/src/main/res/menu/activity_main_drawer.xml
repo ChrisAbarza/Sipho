@@ -3,29 +3,29 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_camera"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="Import" />
+            android:id="@+id/nav_index"
+            android:icon="@drawable/ic_home_black_24dp"
+            android:title="Inicio" />
         <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Gallery" />
+            android:id="@+id/nav_categoria"
+            android:icon="@drawable/ic_store_black_24dp"
+            android:title="Buscar por categoría" />
         <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Slideshow" />
+            android:id="@+id/nav_seguidos"
+            android:icon="@drawable/ic_supervisor_account_black_24dp"
+            android:title="Seguidos" />
         <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
+            android:id="@+id/nav_mis_publicaciones"
+            android:icon="@drawable/ic_local_offer_black_24dp"
+            android:title="Mis publicaciones" />
     </group>
 
     <item android:title="Communicate">
         <menu>
             <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
+                android:id="@+id/nav_ayuda"
+                android:icon="@drawable/ic_help_black_24dp"
+                android:title="Ayuda" />
             <item
                 android:id="@+id/nav_end_session"
                 android:icon="@drawable/ic_power_settings_new_black_24dp"
