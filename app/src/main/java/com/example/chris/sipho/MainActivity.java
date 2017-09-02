@@ -39,6 +39,9 @@ import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import static android.R.attr.id;
+import static com.google.android.gms.maps.CameraUpdateFactory.newLatLng;
+
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback {
@@ -50,6 +53,9 @@ public class MainActivity extends AppCompatActivity
     private final static int MY_PERMISSION_FINE_LOCATION = 101;
 
     private ProfileTracker profileTracker;
+
+
+    Metodos meto = new Metodos();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +73,8 @@ public class MainActivity extends AppCompatActivity
             @Override
             protected void onCurrentProfileChanged(Profile oldProfile, Profile currentProfile) {
                 if (currentProfile != null) {
-                    displayProfileInfo(currentProfile);
+                    guardarDatosFacebook(currentProfile);
+                    displayProfileInfo();
                 }
             }
         };
@@ -77,10 +84,12 @@ public class MainActivity extends AppCompatActivity
         } else {
             Profile profile = Profile.getCurrentProfile();
             if (profile != null) {
-                displayProfileInfo(profile);
+                guardarDatosFacebook(profile);
+                displayProfileInfo();
             } else {
                 Profile.fetchProfileForCurrentAccessToken();
             }
+
         }
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -111,6 +120,13 @@ public class MainActivity extends AppCompatActivity
 
     }
 
+    private void guardarDatosFacebook(Profile profile) {
+        meto.setId(profile.getId());
+        meto.setName(profile.getName());
+        meto.setPhotoUrl(profile.getProfilePictureUri(100, 100).toString());
+
+    }
+
     private void goLoginScreen() {
         Intent intent = new Intent(this, LoginActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -122,10 +138,10 @@ public class MainActivity extends AppCompatActivity
         goLoginScreen();
     }
 
-    private void displayProfileInfo(Profile profile) {
-        String id = profile.getId();
-        String name = profile.getName();
-        String photoUrl = profile.getProfilePictureUri(100, 100).toString();
+    private void displayProfileInfo() {
+        String id = meto.getId();
+        String name = meto.getName();
+        String photoUrl = meto.getPhotoUrl();
 
         nameTextView.setText(name);
         idTextView.setText(id);
@@ -205,9 +221,9 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onMapReady(GoogleMap googleMap) {
         map = googleMap;
-        LatLng sydney = new LatLng(-34, 151);
-        map.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        map.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        LatLng valdivia = new LatLng(-39.8173788, -73.24253329999999);
+        map.addMarker(new MarkerOptions().position(valdivia).title("Prueba"));
+        map.moveCamera(CameraUpdateFactory.newLatLng(valdivia));
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
 
