@@ -70,7 +70,7 @@ public class CrearActivity extends AppCompatActivity {
         btnCrear.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 String nombre = editTextCrear.getText().toString();
-                String insertar = met.getBdUrl()+"registro.php?id="+id+"&nombre="+nombre;
+                String insertar = met.getBdUrl()+"registro.php?id="+id+"&nombre="+nombre+"&img="+met.getPhotoUrl();
                 insertarDatos(insertar);
 
             }
