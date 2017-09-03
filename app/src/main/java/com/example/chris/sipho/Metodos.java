@@ -1,5 +1,7 @@
 package com.example.chris.sipho;
 
+import com.facebook.Profile;
+
 /**
  * Created by salv8 on 02/09/2017.
  */
@@ -9,6 +11,11 @@ public class Metodos {
     private String id;
     private String name;
     private String photoUrl;
+    private String bdUrl ="http://192.168.1.7/sipho/";
+
+    public String getBdUrl() {
+        return bdUrl;
+    }
 
     public String getId() {
         return id;
@@ -33,6 +40,14 @@ public class Metodos {
     public void setPhotoUrl(String photoUrl) {
         this.photoUrl = photoUrl;
     }
+
+    public void guardarDatosFacebook(Profile profile) {
+        setId(profile.getId());
+        setName(profile.getName());
+        setPhotoUrl(profile.getProfilePictureUri(100, 100).toString());
+
+    }
+
 
 
 }

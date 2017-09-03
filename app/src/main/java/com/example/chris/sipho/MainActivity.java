@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             protected void onCurrentProfileChanged(Profile oldProfile, Profile currentProfile) {
                 if (currentProfile != null) {
-                    guardarDatosFacebook(currentProfile);
+                    meto.guardarDatosFacebook(currentProfile);
                     displayProfileInfo();
                 }
             }
@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity
         } else {
             Profile profile = Profile.getCurrentProfile();
             if (profile != null) {
-                guardarDatosFacebook(profile);
+                meto.guardarDatosFacebook(profile);
                 displayProfileInfo();
             } else {
                 Profile.fetchProfileForCurrentAccessToken();
@@ -120,12 +120,6 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    private void guardarDatosFacebook(Profile profile) {
-        meto.setId(profile.getId());
-        meto.setName(profile.getName());
-        meto.setPhotoUrl(profile.getProfilePictureUri(100, 100).toString());
-
-    }
 
     private void goLoginScreen() {
         Intent intent = new Intent(this, LoginActivity.class);
