@@ -47,7 +47,8 @@ public class CrearActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crear);
 
-        final Profile profile = Profile.getCurrentProfile();
+        Profile profile = Profile.getCurrentProfile();
+        met.guardarDatosFacebook(profile);
 
 
 
@@ -58,7 +59,7 @@ public class CrearActivity extends AppCompatActivity {
 
 
         //Toast.makeText(CrearActivity.this, "1", Toast.LENGTH_SHORT).show();
-        met.guardarDatosFacebook(profile);
+        final String id = profile.getId();
         displayProfileInfo();
 
 
@@ -68,7 +69,8 @@ public class CrearActivity extends AppCompatActivity {
 
         btnCrear.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                String insertar = met.getBdUrl()+"registro.php?id="+met.getId()+"&nombre="+editTextCrear.getText();
+                String nombre = editTextCrear.getText().toString();
+                String insertar = met.getBdUrl()+"registro.php?id="+id+"&nombre="+nombre;
                 insertarDatos(insertar);
 
             }
@@ -79,8 +81,7 @@ public class CrearActivity extends AppCompatActivity {
 
     }
     public void insertarDatos(String URL){
-
-
+        Log.i("url",""+URL);
 
         RequestQueue queue = Volley.newRequestQueue(this);
         StringRequest stringRequest = new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {
