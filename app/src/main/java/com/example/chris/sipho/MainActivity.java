@@ -10,6 +10,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -23,6 +24,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.facebook.AccessToken;
 import com.facebook.Profile;
 import com.facebook.ProfileTracker;
@@ -34,6 +41,9 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.util.Map;
 
@@ -51,6 +61,8 @@ public class MainActivity extends AppCompatActivity
     private TextView nameTextView;
     private TextView idTextView;
     private final static int MY_PERMISSION_FINE_LOCATION = 101;
+    JSONArray ja;
+    private  String usrname;
 
     private ProfileTracker profileTracker;
 
@@ -85,7 +97,10 @@ public class MainActivity extends AppCompatActivity
             Profile profile = Profile.getCurrentProfile();
             if (profile != null) {
                 meto.guardarDatosFacebook(profile);
+                String urlBuscarUsr=meto.getBdUrl()+"consultaNomUsr.php?id="+meto.getId().toString();
+                buscarNombreUsuario(urlBuscarUsr);
                 displayProfileInfo();
+
             } else {
                 Profile.fetchProfileForCurrentAccessToken();
             }
@@ -133,12 +148,13 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void displayProfileInfo() {
-        String id = meto.getId();
+
+
         String name = meto.getName();
         String photoUrl = meto.getPhotoUrl();
 
         nameTextView.setText(name);
-        idTextView.setText(id);
+
 
         Glide.with(getApplicationContext())
                 .load(photoUrl)
@@ -259,6 +275,41 @@ public class MainActivity extends AppCompatActivity
                 }
                 break;
         }
+    }
+    public void buscarNombreUsuario(String URL){
+        Log.i("url",""+URL);
+
+        RequestQueue queue = Volley.newRequestQueue(this);
+        StringRequest stringRequest =  new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                try {
+                    ja = new JSONArray(response);
+                    usrname = ja.getString(0);
+                    if(usrname.equals("")){
+                        Toast.makeText(MainActivity.this, "error", Toast.LENGTH_SHORT).show();
+
+                    }else{
+                        idTextView.setText("@"+usrname);
+                    }
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Toast.makeText(getApplicationContext(),"Error "+e,Toast.LENGTH_LONG).show();
+                }
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(MainActivity.this, "Ops Error", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+        queue.add(stringRequest);
     }
 }
 
