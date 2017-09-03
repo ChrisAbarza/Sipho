@@ -50,6 +50,7 @@
         android:ems="10"
         android:hint="Ingresa nombre de usuario"
         android:inputType="textPersonName"
+        android:maxLength="20"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintLeft_toLeftOf="parent"

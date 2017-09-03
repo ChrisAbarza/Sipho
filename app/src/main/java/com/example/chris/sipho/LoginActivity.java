@@ -79,15 +79,6 @@ public class LoginActivity extends AppCompatActivity {
                         met.guardarDatosFacebook(profile);
                         String url= bd+"consulta.php?id="+met.getId();
                         buscarExistencia(url);
-                        if(resp == 1){
-                            goCrearScreen();
-
-
-                        }else {
-                            goMainScreen();
-                            Toast.makeText(LoginActivity.this, "Bienvenido de vuelta", Toast.LENGTH_LONG).show();
-
-                        }
 
                     } else {
                         Profile.fetchProfileForCurrentAccessToken();
@@ -104,7 +95,7 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onError(FacebookException error) {
-                Toast.makeText(LoginActivity.this, "Error", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, "Error", Toast.LENGTH_LONG).show();
             }
         });
 
