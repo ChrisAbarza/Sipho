@@ -142,7 +142,7 @@ public class LoginActivity extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                     resp = 1;
-                    Toast.makeText(getApplicationContext(),"El usuario no existe en la base de datos",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(),"El usuario no existe en la base de datos",Toast.LENGTH_SHORT).show();
                 }
                 if(resp == 1){
                     goCrearScreen();

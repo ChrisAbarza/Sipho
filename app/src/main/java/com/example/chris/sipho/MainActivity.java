@@ -1,8 +1,12 @@
 package com.example.chris.sipho;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -35,6 +39,7 @@ import com.facebook.Profile;
 import com.facebook.ProfileTracker;
 import com.facebook.login.LoginManager;
 import com.bumptech.glide.Glide;
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -62,7 +67,9 @@ public class MainActivity extends AppCompatActivity
     private TextView idTextView;
     private final static int MY_PERMISSION_FINE_LOCATION = 101;
     JSONArray ja;
-    private  String usrname;
+    private String usrname;
+    double lat = 0.0;
+    double lng = 0.0;
 
     private ProfileTracker profileTracker;
 
@@ -97,7 +104,7 @@ public class MainActivity extends AppCompatActivity
             Profile profile = Profile.getCurrentProfile();
             if (profile != null) {
                 meto.guardarDatosFacebook(profile);
-                String urlBuscarUsr=meto.getBdUrl()+"consultaNomUsr.php?id="+meto.getId().toString();
+                String urlBuscarUsr = meto.getBdUrl() + "consultaNomUsr.php?id=" + meto.getId().toString();
                 buscarNombreUsuario(urlBuscarUsr);
                 displayProfileInfo();
 
@@ -231,9 +238,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onMapReady(GoogleMap googleMap) {
         map = googleMap;
-        LatLng valdivia = new LatLng(-39.8173788, -73.24253329999999);
-        map.addMarker(new MarkerOptions().position(valdivia).title("Prueba"));
-        map.moveCamera(CameraUpdateFactory.newLatLng(valdivia));
+        miUbicacion();
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
 
@@ -254,6 +259,57 @@ public class MainActivity extends AppCompatActivity
 
         }
 
+    }
+
+    private void actualizarCamara(double lat, double lng) {
+        LatLng coordenada = new LatLng(lat, lng);
+        CameraUpdate ubicacion = CameraUpdateFactory.newLatLngZoom(coordenada, 16);
+        map.animateCamera(ubicacion);
+
+    }
+
+    private void actualizarUbicacion(Location location) {
+        if (location != null) {
+            lat = location.getLatitude();
+            lng = location.getLongitude();
+            actualizarCamara(lat, lng);
+        }
+
+    }
+
+    LocationListener locListen = new LocationListener() {
+        @Override
+        public void onLocationChanged(Location location) {
+            actualizarUbicacion(location);
+
+        }
+
+        @Override
+        public void onStatusChanged(String provider, int status, Bundle extras) {
+
+        }
+
+        @Override
+        public void onProviderEnabled(String provider) {
+
+        }
+
+        @Override
+        public void onProviderDisabled(String provider) {
+
+        }
+    };
+
+
+    private void miUbicacion() {
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+            return;
+        }
+        LocationManager locMan = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        Location loc = locMan.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        actualizarUbicacion(loc);
     }
 
     @Override
