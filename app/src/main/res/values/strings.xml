@@ -7,6 +7,7 @@
     <string name="action_settings">Settings</string>
 
     <string name="facebook_app_id" translatable="false">1746793515620627</string>
+    <string name="baseDatos" translatable="false">"http://192.168.1.7/sipho/"</string>
 
 
 
