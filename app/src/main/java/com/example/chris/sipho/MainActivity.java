@@ -13,6 +13,8 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
@@ -61,6 +63,12 @@ import static com.google.android.gms.maps.CameraUpdateFactory.newLatLng;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback {
 
+    public static final String IDUSUARIO ="idUsuario" ;
+    public static final String LATITUD = "latitud" ;
+    public static final String LONGITUD = "longitud" ;
+    public static final String NOMBREUSUARIO = "nombreUsuario" ;
+    public static final String IMGUSUARIO = "imgUsuario";
+    public static final String NOMBRECOMPLETO ="nombreCompleto" ;
     private GoogleMap map;
     private ImageView photoImageView;
     private TextView nameTextView;
@@ -70,6 +78,7 @@ public class MainActivity extends AppCompatActivity
     private String usrname;
     double lat = 0.0;
     double lng = 0.0;
+    String usrid ;
 
     private ProfileTracker profileTracker;
 
@@ -104,7 +113,8 @@ public class MainActivity extends AppCompatActivity
             Profile profile = Profile.getCurrentProfile();
             if (profile != null) {
                 meto.guardarDatosFacebook(profile);
-                String urlBuscarUsr = meto.getBdUrl() + "consultaNomUsr.php?id=" + meto.getId().toString();
+                usrid = meto.getId().toString();
+                String urlBuscarUsr = meto.getBdUrl() + "consultaNomUsr.php?id=" + usrid;
                 buscarNombreUsuario(urlBuscarUsr);
                 displayProfileInfo();
 
@@ -121,8 +131,16 @@ public class MainActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+
+                Intent intent = new Intent(MainActivity.this, NewOffActivity.class);
+                intent.putExtra(IDUSUARIO, usrid);
+                intent.putExtra(LATITUD, lat);
+                intent.putExtra(LONGITUD, lng);
+                intent.putExtra(NOMBREUSUARIO,idTextView.getText().toString());
+                intent.putExtra(IMGUSUARIO,meto.getPhotoUrl());
+                intent.putExtra(NOMBRECOMPLETO,meto.getName());
+                startActivity(intent);
+
             }
         });
 
@@ -207,7 +225,9 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_index) {
-            // Handle the camera action
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
         } else if (id == R.id.nav_categoria) {
 
         } else if (id == R.id.nav_seguidos) {
