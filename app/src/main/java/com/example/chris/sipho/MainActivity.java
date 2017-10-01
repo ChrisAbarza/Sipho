@@ -379,13 +379,13 @@ public class MainActivity extends AppCompatActivity
         ArrayList<String> lista = new ArrayList<>();
         for (int i=0;i<mja.length();i+=3){
             try {
-                  lista.add(mja.getString(i)+","+mja.getString(i+1)+","+mja.getString(i+2));
+                  lista.add(mja.getString(i)+",æè"+mja.getString(i+1)+",æè"+mja.getString(i+2));
             }catch (JSONException e){
 
             }
         }
         for (int m=0;m<lista.size();m++){
-            String[] slatlng = lista.get(m).split(",");
+            String[] slatlng = lista.get(m).split(",æè");
             LatLng latLng = new LatLng(Double.valueOf(slatlng[1]),Double.valueOf(slatlng[2]));
             map.addMarker(new MarkerOptions()
                     .title(slatlng[0])
