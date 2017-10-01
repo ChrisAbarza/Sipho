@@ -52,11 +52,14 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import static android.R.attr.id;
+import static android.provider.ContactsContract.CommonDataKinds.Website.URL;
 import static com.google.android.gms.maps.CameraUpdateFactory.newLatLng;
 
 
@@ -259,6 +262,9 @@ public class MainActivity extends AppCompatActivity
     public void onMapReady(GoogleMap googleMap) {
         map = googleMap;
         miUbicacion();
+        String url = meto.getBdUrl()+"cargarMarcador.php";
+        //String url = "http://192.168.1.6/sipho/cargarMarcador.php";
+
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
 
@@ -278,6 +284,7 @@ public class MainActivity extends AppCompatActivity
 
 
         }
+        cargarMarcadores(url);
 
     }
 
@@ -330,6 +337,63 @@ public class MainActivity extends AppCompatActivity
         LocationManager locMan = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         Location loc = locMan.getLastKnownLocation(LocationManager.GPS_PROVIDER);
         actualizarUbicacion(loc);
+    }
+
+    private void cargarMarcadores(String url){
+        Log.i("url",""+url);
+        RequestQueue queue = Volley.newRequestQueue(this);
+        StringRequest stringRequest =  new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                response = response.replace("][",",");
+                if(response.length()>0){
+                    try {
+                        JSONArray mja = new JSONArray(response);
+                        Log.i("sizejson",""+mja.length());
+                        insertarMarcadores(mja);
+
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        Toast.makeText(getApplicationContext(),"Error "+e,Toast.LENGTH_LONG).show();
+                    }catch (NullPointerException s){
+                        s.printStackTrace();
+
+                    }
+
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(MainActivity.this, "Ops Error 1"+error, Toast.LENGTH_SHORT).show();
+
+            }
+        });
+        queue.add(stringRequest);
+
+
+    }
+    private void insertarMarcadores(JSONArray mja){
+        ArrayList<String> lista = new ArrayList<>();
+        for (int i=0;i<mja.length();i+=3){
+            try {
+                  lista.add(mja.getString(i)+","+mja.getString(i+1)+","+mja.getString(i+2));
+            }catch (JSONException e){
+
+            }
+        }
+        for (int m=0;m<lista.size();m++){
+            String[] slatlng = lista.get(m).split(",");
+            LatLng latLng = new LatLng(Double.valueOf(slatlng[1]),Double.valueOf(slatlng[2]));
+            map.addMarker(new MarkerOptions()
+                    .title(slatlng[0])
+                    .position(latLng)
+
+            );
+        }
+
     }
 
     @Override
