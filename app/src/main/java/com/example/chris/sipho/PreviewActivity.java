@@ -80,7 +80,6 @@ public class PreviewActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Metodos met= new Metodos();
                 generarIDAleatorio();
-                Toast.makeText(PreviewActivity.this, ""+descripcion, Toast.LENGTH_SHORT).show();
                 String url = met.getBdUrl()+"insertarOferta.php?id="+id+"&usuario="+idUsuario+"&nomOferta="+nombreOferta+"&descOferta="+descripcion+"&precioOferta="+precio+"&cateOferta="+categoria+"&lat="+lat+"&lng="+lng;
                 url = url.replaceAll(" ","%20");
                 insertarDatos(url);

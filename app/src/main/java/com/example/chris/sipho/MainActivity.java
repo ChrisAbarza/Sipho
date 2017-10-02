@@ -263,7 +263,6 @@ public class MainActivity extends AppCompatActivity
         map = googleMap;
         miUbicacion();
         String url = meto.getBdUrl()+"cargarMarcador.php";
-        //String url = "http://192.168.1.6/sipho/cargarMarcador.php";
 
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
