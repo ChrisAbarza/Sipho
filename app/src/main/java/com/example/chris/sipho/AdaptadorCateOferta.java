@@ -53,7 +53,7 @@ public class AdaptadorCateOferta extends BaseAdapter {
         vista = inflate.inflate(R.layout.ofertas_list_view , null);
 
         ImageView imagenOferta = (ImageView) vista.findViewById(R.id.imageViewOfertaList);
-        ImageView imagenCate = (ImageView) vista.findViewById(R.id.imageViewCateList);
+        //ImageView imagenCate = (ImageView) vista.findViewById(R.id.imageViewCateList);
         TextView textFecha = (TextView) vista.findViewById(R.id.textViewFechaList);
         TextView textUsuario = (TextView) vista.findViewById(R.id.textViewUsuarioList);
         TextView textNombre = (TextView) vista.findViewById(R.id.textViewNombreList);

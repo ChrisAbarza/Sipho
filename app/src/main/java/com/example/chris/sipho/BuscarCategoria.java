@@ -33,6 +33,7 @@ public class BuscarCategoria extends AppCompatActivity implements AdapterView.On
     String categoriaOferta;
     ListView listaOferta;
     ArrayList<Oferta> Lista;
+    Metodos met= new Metodos();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,11 +51,11 @@ public class BuscarCategoria extends AppCompatActivity implements AdapterView.On
 
         Lista = new ArrayList<Oferta>();
 
-        Metodos met= new Metodos();
 
-        //String URL = met.getBdUrl()+"buscarPorCategoria.php?cateOferta="+categoriaOferta;
-        String URL = met.getBdUrl()+"buscarPorCategoria.php?cateOferta=Comida";
-        buscarCategoria(URL);
+
+
+        //String URL = met.getBdUrl()+"buscarPorCategoria.php?cateOferta=Comida";
+
 
 
 
@@ -99,6 +100,7 @@ public class BuscarCategoria extends AppCompatActivity implements AdapterView.On
     }
 
     private void prepararList(JSONArray mja){
+        Lista.clear();
         ArrayList<String> lista = new ArrayList<>();
         for (int i=0;i<mja.length();i+=8){
             try {
@@ -121,6 +123,8 @@ public class BuscarCategoria extends AppCompatActivity implements AdapterView.On
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         TextView myTextCategoria= (TextView) view;
         categoriaOferta = myTextCategoria.getText().toString();
+        String URL = met.getBdUrl()+"buscarPorCategoria.php?cateOferta="+categoriaOferta;
+        buscarCategoria(URL);
     }
 
     @Override
