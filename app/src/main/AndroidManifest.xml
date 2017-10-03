@@ -39,7 +39,8 @@
         <activity
             android:name=".NewOffActivity"
             android:label="Ingresar una oferta" />
-        <activity android:name=".PreviewActivity"></activity>
+        <activity android:name=".PreviewActivity" />
+        <activity android:name=".BuscarCategoria"></activity>
     </application>
 
 </manifest>

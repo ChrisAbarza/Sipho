@@ -232,6 +232,8 @@ public class MainActivity extends AppCompatActivity
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
         } else if (id == R.id.nav_categoria) {
+            Intent intent = new Intent(this, BuscarCategoria.class);
+            startActivity(intent);
 
         } else if (id == R.id.nav_seguidos) {
 
