@@ -32,6 +32,7 @@
                     android:id="@+id/imageViewCateList"
                     android:layout_width="50dp"
                     android:layout_height="32dp"
+                    android:layout_marginLeft="10dp"
                     android:layout_weight="1"
                     app:srcCompat="@drawable/comida" />
 
@@ -45,7 +46,10 @@
                         android:id="@+id/textViewFechaList"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:textColor="#000000"
                         android:layout_weight="1"
+                        android:padding="0dp"
                         android:text="fecha"
                         android:textColorLink="@color/cardview_light_background" />
 
@@ -53,9 +57,14 @@
                         android:id="@+id/textViewUsuarioList"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:textColor="#000000"
                         android:layout_weight="1"
+                        android:clickable="false"
+                        android:padding="0dp"
                         android:text="user"
-                        android:textColorLink="@color/cardview_light_background" />
+                        android:textColorLink="@color/cardview_light_background"
+                        android:textStyle="italic" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -64,20 +73,31 @@
                 android:id="@+id/textViewNombreList"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="7dp"
                 android:text="Nombre"
+                android:textColor="#000000"
+                android:textSize="20sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/textViewPrecioList"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Precio" />
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="5dp"
+                android:text="Precio"
+                android:textColor="#000000" />
 
             <TextView
                 android:id="@+id/textViewDescripcionList"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Descripcion" />
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="5dp"
+                android:text="Descripcion"
+                android:textColor="#000000" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

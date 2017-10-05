@@ -10,10 +10,14 @@
     <Spinner
         android:id="@+id/spinnerOferta"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp" />
 
     <ListView
         android:id="@+id/lstOferta"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:dividerHeight="7dp" />
 </LinearLayout>

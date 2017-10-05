@@ -1,5 +1,6 @@
 package com.example.chris.sipho;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,6 +23,7 @@ import com.google.android.gms.maps.model.LatLng;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -50,6 +52,17 @@ public class BuscarCategoria extends AppCompatActivity implements AdapterView.On
         categoria.setOnItemSelectedListener(this);
 
         Lista = new ArrayList<Oferta>();
+
+        listaOferta.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Oferta off = (Oferta) parent.getItemAtPosition(position);
+
+                Intent ir = new Intent(getApplicationContext(), VerOferta.class);
+                ir.putExtra("oferta", (Serializable) off);
+                startActivity(ir);
+            }
+        });
 
 
 

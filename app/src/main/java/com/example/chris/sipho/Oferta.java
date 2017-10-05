@@ -1,12 +1,13 @@
 package com.example.chris.sipho;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by salv8 on 02/10/2017.
  */
 
-public class Oferta {
+public class Oferta implements Serializable {
     private int id, precioOferta;
     private String nomOferta, descOferta, cateOferta, usuario, imagen, fecha;
 

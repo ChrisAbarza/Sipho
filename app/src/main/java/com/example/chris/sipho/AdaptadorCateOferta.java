@@ -63,8 +63,8 @@ public class AdaptadorCateOferta extends BaseAdapter {
         textFecha.setText(ListaOfertas.get(position).getFecha().toString());
         textUsuario.setText("@"+ListaOfertas.get(position).getUsuario());
         textNombre.setText(ListaOfertas.get(position).getNomOferta());
-        textPrecio.setText(String.valueOf(ListaOfertas.get(position).getPrecioOferta()));
-        textDescripcion.setText("$"+ListaOfertas.get(position).getPrecioOferta());
+        textPrecio.setText(String.valueOf("$"+ListaOfertas.get(position).getPrecioOferta()));
+        textDescripcion.setText(ListaOfertas.get(position).getDescOferta());
 
         Glide.with(getApplicationContext())
                .load(ListaOfertas.get(position).getImagen())
