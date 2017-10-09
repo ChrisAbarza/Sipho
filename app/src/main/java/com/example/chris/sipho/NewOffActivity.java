@@ -1,19 +1,27 @@
 package com.example.chris.sipho;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Base64;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 
 import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
 import static android.os.Build.VERSION_CODES.N;
@@ -26,6 +34,12 @@ import static com.example.chris.sipho.MainActivity.NOMBREUSUARIO;
 import static com.example.chris.sipho.R.id.idTextView;
 
 public class NewOffActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+
+
+    private ImageView imageView;
+    private Bitmap bitmap;
+    private int PICK_IMAGE_REQUEST = 1;
+    private String KEY_IMAGE = "image";
     public static final String NOMBREOFERTA = "nombreOferta" ;
     public static final String DESCRIPCION = "descripcion";
     public static final String PRECIO = "precio";
@@ -38,7 +52,7 @@ public class NewOffActivity extends AppCompatActivity implements AdapterView.OnI
     public static final String CATEGORIA = "categoria";
     Spinner categoria;
     EditText nombre,descripcion,precio;
-    Button btnCancelar,btnprevisualizar;
+    Button btnCancelar,btnprevisualizar,buttonChoose;
 
     public String nombreCompleto, idUsuario,imgUsuario,nombreUsuario,categoriaOferta;
     Double lat,lng;
@@ -53,6 +67,8 @@ public class NewOffActivity extends AppCompatActivity implements AdapterView.OnI
         precio = (EditText) findViewById(R.id.editTextPrecio);
         btnCancelar = (Button) findViewById(R.id.buttonCancelarOferta);
         btnprevisualizar = (Button) findViewById(R.id.buttonPrevisualizar);
+        buttonChoose = (Button) findViewById(R.id.buttonChoose);
+        imageView  = (ImageView) findViewById(R.id.imageViewNewOff);
 
         Intent llegada = getIntent();
         nombreCompleto = llegada.getStringExtra(MainActivity.NOMBRECOMPLETO);
@@ -67,6 +83,14 @@ public class NewOffActivity extends AppCompatActivity implements AdapterView.OnI
         categoria.setAdapter(adapter);
         categoria.setOnItemSelectedListener(this);
 
+        buttonChoose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showFileChooser();
+
+            }
+        });
+
         btnCancelar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -78,7 +102,11 @@ public class NewOffActivity extends AppCompatActivity implements AdapterView.OnI
         btnprevisualizar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Intent intent = new Intent(NewOffActivity.this, PreviewActivity.class);
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                byte[] byteArray = stream.toByteArray();
                 intent.putExtra(NOMBREOFERTA, nombre.getText().toString());
                 intent.putExtra(DESCRIPCION, descripcion.getText().toString());
                 intent.putExtra(PRECIO, precio.getText().toString());
@@ -89,6 +117,7 @@ public class NewOffActivity extends AppCompatActivity implements AdapterView.OnI
                 intent.putExtra(LATITUD2, lat);
                 intent.putExtra(LONGITUD2, lng);
                 intent.putExtra(CATEGORIA,categoriaOferta);
+                intent.putExtra("bitmap",byteArray);
                 startActivity(intent);
             }
         });
@@ -103,5 +132,28 @@ public class NewOffActivity extends AppCompatActivity implements AdapterView.OnI
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
+    }
+    private void showFileChooser() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            Uri filePath = data.getData();
+            try {
+                //Getting the Bitmap from Gallery
+                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
+                //Setting the Bitmap to ImageView
+                imageView.setImageBitmap(bitmap);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

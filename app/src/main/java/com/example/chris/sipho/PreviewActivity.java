@@ -1,8 +1,12 @@
 package com.example.chris.sipho;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -10,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -27,17 +32,22 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.io.ByteArrayOutputStream;
+import java.util.Hashtable;
+import java.util.Map;
 import java.util.Random;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
 import static com.example.chris.sipho.R.id.imageViewCrear;
+import static com.facebook.internal.FacebookRequestErrorClassification.KEY_NAME;
 
 public class PreviewActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMarkerDragListener {
     String nombreCompleto,nombreOferta,descripcion,precio,idUsuario,imgUsuario,nombreUsuario,categoria;
     Double lat,lng;
     int id;
+    Bitmap bitmap;
     private GoogleMap mMap;
 
     @Override
@@ -54,6 +64,7 @@ public class PreviewActivity extends AppCompatActivity implements OnMapReadyCall
         ImageView imageViewPreview = (CircleImageView) findViewById(R.id.imageViewUsuarioOferta);
         Button btnCancelar = (Button) findViewById(R.id.buttonCancelarPreview);
         Button btnPublicar = (Button) findViewById(R.id.buttonPublicarPreview);
+        ImageView imageViewOfertaPreview = (ImageView) findViewById(R.id.imageViewOferta);
 
 
         Intent intent = getIntent();
@@ -67,6 +78,8 @@ public class PreviewActivity extends AppCompatActivity implements OnMapReadyCall
         nombreUsuario = intent.getStringExtra(NewOffActivity.NOMBREUSUARIO2);
         lat = intent.getDoubleExtra(NewOffActivity.LATITUD2,0.0);
         lng = intent.getDoubleExtra(NewOffActivity.LONGITUD2,0.0);
+        byte[] byteArray = getIntent().getByteArrayExtra("bitmap");
+        bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
 
         txtNombreOferta.setText(nombreOferta);
         txtDescripcion.setText(descripcion);
@@ -74,6 +87,8 @@ public class PreviewActivity extends AppCompatActivity implements OnMapReadyCall
         txtCategoria.setText(categoria);
         nombreCompletoFacebook.setText(nombreCompleto);
         txtNombreUsuario.setText(nombreUsuario);
+
+        imageViewOfertaPreview.setImageBitmap(bitmap);
 
         Glide.with(getApplicationContext())
                 .load(imgUsuario)
@@ -90,8 +105,8 @@ public class PreviewActivity extends AppCompatActivity implements OnMapReadyCall
             public void onClick(View v) {
                 Metodos met= new Metodos();
                 generarIDAleatorio();
-                String url = met.getBdUrl()+"insertarOferta.php?id="+id+"&usuario="+idUsuario+"&nomOferta="+nombreOferta+"&descOferta="+descripcion+"&precioOferta="+precio+"&cateOferta="+categoria+"&lat="+lat+"&lng="+lng;
-                url = url.replaceAll(" ","%20");
+                String url = met.getBdUrl()+"insertarOfertaPost.php";
+                //url = url.replaceAll(" ","%20");
                 insertarDatos(url);
 
             }
@@ -109,27 +124,61 @@ public class PreviewActivity extends AppCompatActivity implements OnMapReadyCall
         id = random.nextInt(2000000000);
 
     }
-    public void insertarDatos(String URL){
-        Log.i("url",""+URL);
+    public void insertarDatos(String url){
+        final ProgressDialog loading = ProgressDialog.show(this,"Uploading...","Please wait...",false,false);
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String s) {
+                        //Disimissing the progress dialog
+                        loading.dismiss();
+                        //Showing toast message of the response
+                        Toast.makeText(PreviewActivity.this, s , Toast.LENGTH_LONG).show();
+                        goMainScreen();
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                        //Dismissing the progress dialog
+                        loading.dismiss();
 
-        RequestQueue queue = Volley.newRequestQueue(this);
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {
+                        //Showing toast
+                        Toast.makeText(PreviewActivity.this, volleyError.getMessage().toString(), Toast.LENGTH_LONG).show();
+                    }
+                }){
             @Override
-            public void onResponse(String response) {
+            protected Map<String, String> getParams() throws AuthFailureError {
+                //Converting Bitmap to String
+                String image = getStringImage(bitmap);
 
-                Toast.makeText(PreviewActivity.this, "Correcto!", Toast.LENGTH_SHORT).show();
-                goMainScreen();
+                //Getting Image Name
 
+
+                //Creating parameters
+                Map<String,String> params = new Hashtable<String, String>();
+
+                //Adding parameters
+                params.put("id", String.valueOf(id));
+                params.put("usuario", idUsuario);
+                params.put("nomOferta", nombreOferta);
+                params.put("descOferta", descripcion);
+                params.put("precioOferta", precio);
+                params.put("cateOferta", categoria);
+                params.put("lat", String.valueOf(lat));
+                params.put("lng", String.valueOf(lng));
+                params.put("imagen", image);
+
+                //returning parameters
+                return params;
             }
-        }, new Response.ErrorListener(){
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(PreviewActivity.this, ""+error, Toast.LENGTH_LONG).show();
+        };
 
-            }
-        });
+        //Creating a Request Queue
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
 
-        queue.add(stringRequest);
+        //Adding request to the queue
+        requestQueue.add(stringRequest);
 
     }
     private void goMainScreen() {
@@ -141,7 +190,6 @@ public class PreviewActivity extends AppCompatActivity implements OnMapReadyCall
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        //mMap.getUiSettings().setAllGesturesEnabled(false);
 
 
         // Add a marker in Sydney, Australia, and move the camera.
@@ -172,5 +220,12 @@ public class PreviewActivity extends AppCompatActivity implements OnMapReadyCall
         lat= marker.getPosition().latitude;
         lng= marker.getPosition().longitude;
 
+    }
+    public String getStringImage(Bitmap bmp){
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bmp.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] imageBytes = baos.toByteArray();
+        String encodedImage = Base64.encodeToString(imageBytes, Base64.DEFAULT);
+        return encodedImage;
     }
 }
