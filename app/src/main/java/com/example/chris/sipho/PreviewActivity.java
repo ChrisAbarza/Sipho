@@ -17,6 +17,15 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMapOptions;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.Random;
 
@@ -25,10 +34,11 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
 import static com.example.chris.sipho.R.id.imageViewCrear;
 
-public class PreviewActivity extends AppCompatActivity {
+public class PreviewActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMarkerDragListener {
     String nombreCompleto,nombreOferta,descripcion,precio,idUsuario,imgUsuario,nombreUsuario,categoria;
     Double lat,lng;
     int id;
+    private GoogleMap mMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +97,10 @@ public class PreviewActivity extends AppCompatActivity {
             }
         });
 
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.mapPreview);
+        mapFragment.getMapAsync(this);
+
     }
     private void generarIDAleatorio(){
         Random random = new Random();
@@ -124,4 +138,39 @@ public class PreviewActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
+        //mMap.getUiSettings().setAllGesturesEnabled(false);
+
+
+        // Add a marker in Sydney, Australia, and move the camera.
+        LatLng oferta = new LatLng(lat, lng);
+        Marker off = mMap.addMarker(new MarkerOptions().position(oferta)
+                .draggable(true));
+        CameraUpdate ubicacion = CameraUpdateFactory.newLatLngZoom(oferta, 16);
+        mMap.moveCamera(ubicacion);
+        mMap.setOnMarkerDragListener(this);
+
+
+
+    }
+
+    @Override
+    public void onMarkerDragStart(Marker marker) {
+        Toast.makeText(this, "¡Mueve a donde quieras!", Toast.LENGTH_SHORT).show();
+
+    }
+
+    @Override
+    public void onMarkerDrag(Marker marker) {
+
+    }
+
+    @Override
+    public void onMarkerDragEnd(Marker marker) {
+        lat= marker.getPosition().latitude;
+        lng= marker.getPosition().longitude;
+
+    }
 }

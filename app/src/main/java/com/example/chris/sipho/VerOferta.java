@@ -45,9 +45,7 @@ public class VerOferta extends AppCompatActivity implements OnMapReadyCallback {
     TextView nombreCompletoFacebook;
     ImageView imageViewUsuario;
     private GoogleMap mMap;
-    GoogleMapOptions options = new GoogleMapOptions();
     Double lat,lng;
-    private UiSettings mUiSettings;
 
 
 
@@ -86,7 +84,7 @@ public class VerOferta extends AppCompatActivity implements OnMapReadyCallback {
                 .into(imageViewOferta);
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map2);
+                .findFragmentById(R.id.mapVerOferta);
         mapFragment.getMapAsync(this);
 
     }
