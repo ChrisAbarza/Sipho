@@ -10,8 +10,9 @@ import java.util.Date;
 public class Oferta implements Serializable {
     private int id, precioOferta;
     private String nomOferta, descOferta, cateOferta, usuario, imagen, fecha;
+    private double lat,lng;
 
-    public Oferta(int id, int precioOferta, String nomOferta, String descOferta, String cateOferta, String usuario, String imagen, String fecha) {
+    public Oferta(int id, int precioOferta, String nomOferta, String descOferta, String cateOferta, String usuario, String imagen, String fecha, double lat, double lng) {
         this.id = id;
         this.precioOferta = precioOferta;
         this.nomOferta = nomOferta;
@@ -20,6 +21,8 @@ public class Oferta implements Serializable {
         this.usuario = usuario;
         this.imagen = imagen;
         this.fecha = fecha;
+        this.lat = lat;
+        this.lng = lng;
     }
 
     public int getId() {
@@ -84,5 +87,21 @@ public class Oferta implements Serializable {
 
     public void setFecha(String fecha) {
         this.fecha = fecha;
+    }
+
+    public double getLat() {
+        return lat;
+    }
+
+    public void setLat(double lat) {
+        this.lat = lat;
+    }
+
+    public double getLng() {
+        return lng;
+    }
+
+    public void setLng(double lng) {
+        this.lng = lng;
     }
 }

@@ -115,16 +115,16 @@ public class BuscarCategoria extends AppCompatActivity implements AdapterView.On
     private void prepararList(JSONArray mja){
         Lista.clear();
         ArrayList<String> lista = new ArrayList<>();
-        for (int i=0;i<mja.length();i+=8){
+        for (int i=0;i<mja.length();i+=10){
             try {
-                lista.add(mja.getString(i)+",æè"+mja.getString(i+1)+",æè"+mja.getString(i+2)+",æè"+mja.getString(i+3)+",æè"+mja.getString(i+4)+",æè"+mja.getString(i+5)+",æè"+mja.getString(i+6)+",æè"+mja.getString(i+7));
+                lista.add(mja.getString(i)+",æè"+mja.getString(i+1)+",æè"+mja.getString(i+2)+",æè"+mja.getString(i+3)+",æè"+mja.getString(i+4)+",æè"+mja.getString(i+5)+",æè"+mja.getString(i+6)+",æè"+mja.getString(i+7)+",æè"+mja.getString(i+8)+",æè"+mja.getString(i+9));
             }catch (JSONException e){
 
             }
         }
         for (int m=0;m<lista.size();m++) {
             String[] slista = lista.get(m).split(",æè");
-            Lista.add(new Oferta(Integer.valueOf(slista[0]),Integer.valueOf(slista[1]), slista[2],slista[3],slista[4],slista[5],slista[6], slista[7]));
+            Lista.add(new Oferta(Integer.valueOf(slista[0]),Integer.valueOf(slista[1]), slista[2],slista[3],slista[4],slista[5],slista[6], slista[7],Double.valueOf(slista[8]),Double.valueOf(slista[9])));
 
         }
         AdaptadorCateOferta miadaptador = new AdaptadorCateOferta(getApplicationContext(),Lista);

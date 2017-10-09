@@ -20,8 +20,8 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/imageViewUsuarioOferta"
-            android:layout_width="118dp"
-            android:layout_height="118dp"
+            android:layout_width="62dp"
+            android:layout_height="57dp"
             android:layout_weight="1"
             android:adjustViewBounds="false"
             android:gravity="center"
@@ -29,10 +29,10 @@
             android:paddingTop="5dp"
             app:civ_border_color="#FF000000"
             app:civ_border_width="2dp"
+            android:layout_marginLeft="8dp"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            android:layout_marginTop="8dp"
-            app:layout_constraintTop_toBottomOf="@+id/textViewPrecio" />
+            app:layout_constraintTop_toTopOf="@+id/guideline3"
+            android:layout_marginTop="8dp" />
 
         <android.support.constraint.Guideline
             android:id="@+id/guideline3"
@@ -66,61 +66,65 @@
             android:layout_height="wrap_content"
             android:text="TextView"
             android:textSize="14sp"
-            android:layout_marginTop="9dp"
+            android:textStyle="italic"
+            android:layout_marginTop="6dp"
             app:layout_constraintTop_toBottomOf="@+id/textViewNombreUsuario"
-            android:layout_marginRight="67dp"
-            app:layout_constraintRight_toRightOf="parent" />
+            app:layout_constraintLeft_toRightOf="@+id/imageViewUsuarioOferta"
+            android:layout_marginLeft="8dp" />
 
         <TextView
             android:id="@+id/textViewNombreUsuario"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="91dp"
-            android:layout_marginTop="139dp"
             android:text="TextView"
             android:textSize="18sp"
-            android:textStyle="bold|italic"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/guideline3" />
+            app:layout_constraintTop_toTopOf="@+id/guideline3"
+            android:layout_marginTop="8dp"
+            app:layout_constraintLeft_toRightOf="@+id/imageViewUsuarioOferta"
+            android:layout_marginLeft="8dp" />
 
         <TextView
             android:id="@+id/textViewNombreOferta"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:text="TextView"
-            android:textAlignment="center"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageViewOferta"
-            app:layout_constraintHorizontal_bias="0.503" />
-
-        <TextView
-            android:id="@+id/textViewPrecio"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="TextView"
-            android:textStyle="italic"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewNombreOferta"
-            app:layout_constraintHorizontal_bias="0.501" />
-
-        <TextView
-            android:id="@+id/textViewDescripcion"
-            android:layout_width="240dp"
-            android:layout_height="wrap_content"
+            android:layout_width="281dp"
+            android:layout_height="29dp"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
-            android:layout_marginTop="52dp"
+            android:layout_marginTop="8dp"
             android:text="TextView"
+            android:textAlignment="center"
             android:textSize="24sp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageViewUsuarioOferta" />
+
+        <TextView
+            android:id="@+id/textViewPrecio"
+            android:layout_width="104dp"
+            android:layout_height="29dp"
+            android:text="TextView"
+            android:textAlignment="center"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/textViewNombreOferta"
+            android:layout_marginLeft="8dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginRight="8dp"
+            app:layout_constraintRight_toRightOf="parent" />
+
+        <TextView
+            android:id="@+id/textViewDescripcion"
+            android:layout_width="276dp"
+            android:layout_height="97dp"
+            android:text="TextView"
+            android:textAlignment="center"
+            android:textSize="24sp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/textViewCategoria"
+            android:layout_marginLeft="8dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginRight="8dp"
+            app:layout_constraintRight_toRightOf="parent" />
 
         <android.support.constraint.Guideline
             android:layout_width="wrap_content"
@@ -149,20 +153,26 @@
             android:layout_marginBottom="0dp"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="0dp"
-            android:text="Publicar"
+            android:text="Confirmar"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintLeft_toLeftOf="@+id/guideline4"
             app:layout_constraintRight_toRightOf="parent" />
 
         <TextView
             android:id="@+id/textViewCategoria"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="33dp"
-            android:layout_marginTop="48dp"
+            android:layout_width="153dp"
+            android:layout_height="31dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="8dp"
             android:text="TextView"
+            android:textAlignment="center"
+            android:textSize="24sp"
+            android:textStyle="italic"
+            app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/guideline3" />
+            app:layout_constraintTop_toBottomOf="@+id/textViewPrecio" />
 
     </android.support.constraint.ConstraintLayout>
 </ScrollView>
