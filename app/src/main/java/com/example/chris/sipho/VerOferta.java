@@ -1,5 +1,6 @@
 package com.example.chris.sipho;
 
+import android.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,21 +16,40 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMapOptions;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.UiSettings;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import static com.example.chris.sipho.R.id.map;
 import static com.example.chris.sipho.R.id.photoImageView;
 
-public class VerOferta extends AppCompatActivity {
+public class VerOferta extends AppCompatActivity implements OnMapReadyCallback {
     String imgusr,URL;
     Metodos met = new Metodos();
     TextView nombreCompletoFacebook;
     ImageView imageViewUsuario;
+    private GoogleMap mMap;
+    GoogleMapOptions options = new GoogleMapOptions();
+    Double lat,lng;
+    private UiSettings mUiSettings;
+
+
 
 
     @Override
@@ -55,6 +75,8 @@ public class VerOferta extends AppCompatActivity {
         txtPrecio.setText("$"+String.valueOf(off.getPrecioOferta()));
         txtNombreUsuario.setText("@"+off.getUsuario());
         txtCategoria.setText(off.getCateOferta());
+        lat = off.getLat();
+        lng = off.getLng();
 
         URL=met.getBdUrl()+"completarVerOferta.php?nombre="+off.getUsuario();
         buscarDatosExtrasUsuario(URL);
@@ -63,9 +85,9 @@ public class VerOferta extends AppCompatActivity {
                 .load(off.getImagen())
                 .into(imageViewOferta);
 
-
-
-
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.map2);
+        mapFragment.getMapAsync(this);
 
     }
     private void buscarDatosExtrasUsuario(String URL){
@@ -89,7 +111,7 @@ public class VerOferta extends AppCompatActivity {
                                     .load(slista[1].toString())
                                     .into(imageViewUsuario);
 
-                            //Lista.add(new Oferta(Integer.valueOf(slista[0]),Integer.valueOf(slista[1]), slista[2],slista[3],slista[4],slista[5],slista[6], slista[7],Double.valueOf(slista[8]),Double.valueOf(slista[9])));
+
 
                         }
 
@@ -112,6 +134,20 @@ public class VerOferta extends AppCompatActivity {
             }
         });
         queue.add(stringRequest);
+
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
+        mMap.getUiSettings().setAllGesturesEnabled(false);
+
+
+        // Add a marker in Sydney, Australia, and move the camera.
+        LatLng oferta = new LatLng(lat, lng);
+        mMap.addMarker(new MarkerOptions().position(oferta));
+        CameraUpdate ubicacion = CameraUpdateFactory.newLatLngZoom(oferta, 16);
+        mMap.moveCamera(ubicacion);
 
     }
 }

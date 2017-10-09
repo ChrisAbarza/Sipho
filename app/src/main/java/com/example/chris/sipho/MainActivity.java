@@ -292,7 +292,7 @@ public class MainActivity extends AppCompatActivity
     private void actualizarCamara(double lat, double lng) {
         LatLng coordenada = new LatLng(lat, lng);
         CameraUpdate ubicacion = CameraUpdateFactory.newLatLngZoom(coordenada, 16);
-        map.animateCamera(ubicacion);
+        map.moveCamera(ubicacion);
 
     }
 
