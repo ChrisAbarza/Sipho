@@ -44,7 +44,7 @@ import static com.example.chris.sipho.R.id.imageViewCrear;
 import static com.facebook.internal.FacebookRequestErrorClassification.KEY_NAME;
 
 public class PreviewActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMarkerDragListener {
-    String nombreCompleto,nombreOferta,descripcion,precio,idUsuario,imgUsuario,nombreUsuario,categoria;
+    String nombreCompleto,nombreOferta,descripcion,precio,idUsuario,imgUsuario,nombreUsuario,categoria,image;
     Double lat,lng;
     int id;
     Bitmap bitmap;
@@ -133,7 +133,7 @@ public class PreviewActivity extends AppCompatActivity implements OnMapReadyCall
                         //Disimissing the progress dialog
                         loading.dismiss();
                         //Showing toast message of the response
-                        Toast.makeText(PreviewActivity.this, s , Toast.LENGTH_LONG).show();
+                        Toast.makeText(PreviewActivity.this, "Correcto!" , Toast.LENGTH_LONG).show();
                         goMainScreen();
                     }
                 },
@@ -149,13 +149,7 @@ public class PreviewActivity extends AppCompatActivity implements OnMapReadyCall
                 }){
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
-                //Converting Bitmap to String
-                String image = getStringImage(bitmap);
 
-                //Getting Image Name
-
-
-                //Creating parameters
                 Map<String,String> params = new Hashtable<String, String>();
 
                 //Adding parameters
@@ -167,7 +161,13 @@ public class PreviewActivity extends AppCompatActivity implements OnMapReadyCall
                 params.put("cateOferta", categoria);
                 params.put("lat", String.valueOf(lat));
                 params.put("lng", String.valueOf(lng));
-                params.put("imagen", image);
+                if(bitmap != null){
+
+                    image = getStringImage(bitmap);
+                    params.put("imagen", image);
+
+                }
+
 
                 //returning parameters
                 return params;

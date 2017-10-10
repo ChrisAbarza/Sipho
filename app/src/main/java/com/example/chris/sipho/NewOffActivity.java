@@ -105,7 +105,10 @@ public class NewOffActivity extends AppCompatActivity implements AdapterView.OnI
 
                 Intent intent = new Intent(NewOffActivity.this, PreviewActivity.class);
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                if(bitmap != null){
+
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                }
                 byte[] byteArray = stream.toByteArray();
                 intent.putExtra(NOMBREOFERTA, nombre.getText().toString());
                 intent.putExtra(DESCRIPCION, descripcion.getText().toString());
