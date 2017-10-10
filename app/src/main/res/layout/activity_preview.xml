@@ -136,12 +136,12 @@
         <Button
             android:id="@+id/buttonCancelarPreview"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:layout_marginBottom="0dp"
             android:layout_marginLeft="0dp"
             android:layout_marginRight="0dp"
             android:text="Cancelar"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/mapPreview"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@+id/guideline4" />
@@ -154,7 +154,7 @@
             android:layout_marginLeft="8dp"
             android:layout_marginRight="0dp"
             android:text="Confirmar"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/mapPreview"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintLeft_toLeftOf="@+id/guideline4"
             app:layout_constraintRight_toRightOf="parent" />
@@ -179,17 +179,14 @@
             android:id="@+id/mapPreview"
             android:name="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginBottom="10dp"
+            android:layout_height="175dp"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
             android:layout_marginTop="10dp"
-            app:layout_constraintBottom_toTopOf="@+id/buttonCancelarPreview"
             app:layout_constraintHorizontal_bias="0.469"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewDescripcion"
-            app:layout_constraintVertical_bias="0.493"
             tools:context=".PreviewActivity" />
 
     </android.support.constraint.ConstraintLayout>

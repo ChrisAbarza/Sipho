@@ -63,8 +63,6 @@ public class VerOferta extends AppCompatActivity implements OnMapReadyCallback {
         TextView txtCategoria = (TextView) findViewById(R.id.textViewCategoriaVer);
         imageViewUsuario = (CircleImageView) findViewById(R.id.imageViewUsuarioOfertaVer);
         ImageView imageViewOferta = (ImageView) findViewById(R.id.imageViewOfertaVer);
-        Button btnCancelar = (Button) findViewById(R.id.buttonCancelarVer);
-        Button btnPublicar = (Button) findViewById(R.id.buttonPublicarVer);
 
         Oferta off = (Oferta) getIntent().getExtras().getSerializable("oferta");
 

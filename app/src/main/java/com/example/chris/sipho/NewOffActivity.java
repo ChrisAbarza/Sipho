@@ -43,8 +43,6 @@ public class NewOffActivity extends AppCompatActivity implements AdapterView.OnI
     private ImageView imageView;
     private Bitmap bitmap;
     private int PICK_IMAGE_REQUEST = 1;
-    private String KEY_IMAGE = "image";
-    private String filePath="image/*";
     public static final String NOMBREOFERTA = "nombreOferta" ;
     public static final String DESCRIPCION = "descripcion";
     public static final String PRECIO = "precio";
