@@ -1,11 +1,13 @@
 package com.example.chris.sipho;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -19,6 +21,8 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.facebook.internal.Utility;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -40,6 +44,7 @@ public class NewOffActivity extends AppCompatActivity implements AdapterView.OnI
     private Bitmap bitmap;
     private int PICK_IMAGE_REQUEST = 1;
     private String KEY_IMAGE = "image";
+    private String filePath="image/*";
     public static final String NOMBREOFERTA = "nombreOferta" ;
     public static final String DESCRIPCION = "descripcion";
     public static final String PRECIO = "precio";
@@ -52,7 +57,7 @@ public class NewOffActivity extends AppCompatActivity implements AdapterView.OnI
     public static final String CATEGORIA = "categoria";
     Spinner categoria;
     EditText nombre,descripcion,precio;
-    Button btnCancelar,btnprevisualizar,buttonChoose;
+    Button btnCancelar,btnprevisualizar,buttonChoose,buttonCamera;
 
     public String nombreCompleto, idUsuario,imgUsuario,nombreUsuario,categoriaOferta;
     Double lat,lng;
@@ -69,6 +74,7 @@ public class NewOffActivity extends AppCompatActivity implements AdapterView.OnI
         btnprevisualizar = (Button) findViewById(R.id.buttonPrevisualizar);
         buttonChoose = (Button) findViewById(R.id.buttonChoose);
         imageView  = (ImageView) findViewById(R.id.imageViewNewOff);
+        buttonCamera = (Button) findViewById(R.id.buttonChooseCamera);
 
         Intent llegada = getIntent();
         nombreCompleto = llegada.getStringExtra(MainActivity.NOMBRECOMPLETO);
@@ -86,8 +92,20 @@ public class NewOffActivity extends AppCompatActivity implements AdapterView.OnI
         buttonChoose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showFileChooser();
+               //showFileChooser();
 
+                Intent pickPhoto = new Intent(Intent.ACTION_PICK,
+
+                       android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+               startActivityForResult(pickPhoto , 1);
+
+            }
+        });
+        buttonCamera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent takePicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(takePicture, 0);
             }
         });
 
@@ -137,6 +155,7 @@ public class NewOffActivity extends AppCompatActivity implements AdapterView.OnI
 
     }
     private void showFileChooser() {
+
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
@@ -146,17 +165,27 @@ public class NewOffActivity extends AppCompatActivity implements AdapterView.OnI
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
-            Uri filePath = data.getData();
-            try {
+        switch(requestCode) {
+            case 0:
                 //Getting the Bitmap from Gallery
-                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
+                bitmap = (Bitmap) data.getExtras().get("data");
                 //Setting the Bitmap to ImageView
                 imageView.setImageBitmap(bitmap);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+
+                break;
+            case 1:
+                if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
+                    Uri filePath = data.getData();
+                    try {
+                        //Getting the Bitmap from Gallery
+                        bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
+                        //Setting the Bitmap to ImageView
+                        imageView.setImageBitmap(bitmap);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                break;
         }
     }
 }
