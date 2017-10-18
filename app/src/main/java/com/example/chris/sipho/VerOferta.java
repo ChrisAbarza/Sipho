@@ -14,6 +14,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -38,15 +39,18 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import static android.R.attr.bitmap;
+import static android.R.attr.id;
 import static com.example.chris.sipho.R.id.map;
 import static com.example.chris.sipho.R.id.photoImageView;
 
 public class VerOferta extends AppCompatActivity implements OnMapReadyCallback, AdapterView.OnItemSelectedListener {
-    String imgusr,URL;
+    String valoracionOferta,URL;
     Metodos met = new Metodos();
     TextView nombreCompletoFacebook;
     ImageView imageViewUsuario;
@@ -55,6 +59,9 @@ public class VerOferta extends AppCompatActivity implements OnMapReadyCallback, 
     Spinner valoracion;
     EditText editTextComentario;
     Button btnComentar;
+    Profile profile = Profile.getCurrentProfile();
+    int idOferta;
+
 
 
 
@@ -76,8 +83,9 @@ public class VerOferta extends AppCompatActivity implements OnMapReadyCallback, 
         imageViewUsuario = (CircleImageView) findViewById(R.id.imageViewUsuarioOfertaVer);
         ImageView imageViewOferta = (ImageView) findViewById(R.id.imageViewOfertaVer);
 
-        Oferta off = (Oferta) getIntent().getExtras().getSerializable("oferta");
 
+        Oferta off = (Oferta) getIntent().getExtras().getSerializable("oferta");
+        idOferta = off.getId();
         txtNombreOferta.setText(off.getNomOferta());
         txtDescripcion.setText(off.getDescOferta());
         txtPrecio.setText("$"+String.valueOf(off.getPrecioOferta()));
@@ -104,15 +112,58 @@ public class VerOferta extends AppCompatActivity implements OnMapReadyCallback, 
         btnComentar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Profile profile = Profile.getCurrentProfile();;
-                String id;
-                id= profile.getId();
-                Toast.makeText(VerOferta.this, ""+id, Toast.LENGTH_SHORT).show();
+
+                String URL2=met.getBdUrl()+"insertarComentario.php";
+
+                insertarDatos(URL2);
 
             }
         });
 
     }
+
+    private void insertarDatos(String url) {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String s) {
+                        Toast.makeText(VerOferta.this, "Correcto!", Toast.LENGTH_LONG).show();
+                        editTextComentario.setText("");
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+
+                        //Showing toast
+                        Toast.makeText(VerOferta.this, volleyError.getMessage().toString(), Toast.LENGTH_LONG).show();
+                    }
+                }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+
+                Map<String,String> params = new Hashtable<String, String>();
+
+                //Adding parameters
+                params.put("oferta", String.valueOf(idOferta));
+                params.put("usuario", profile.getId());
+                params.put("coment", editTextComentario.getText().toString());
+                params.put("valoracion", valoracionOferta);
+
+
+                //returning parameters
+                return params;
+            }
+        };
+
+        //Creating a Request Queue
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+
+        //Adding request to the queue
+        requestQueue.add(stringRequest);
+
+    }
+
     private void buscarDatosExtrasUsuario(String URL){
         Log.i("url",""+URL);
         RequestQueue queue = Volley.newRequestQueue(this);
@@ -176,6 +227,8 @@ public class VerOferta extends AppCompatActivity implements OnMapReadyCallback, 
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        TextView myTextValoracion= (TextView) view;
+        valoracionOferta = myTextValoracion.getText().toString();
 
     }
 
