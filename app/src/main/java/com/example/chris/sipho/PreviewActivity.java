@@ -105,7 +105,8 @@ public class PreviewActivity extends AppCompatActivity implements OnMapReadyCall
             public void onClick(View v) {
                 Metodos met= new Metodos();
                 generarIDAleatorio();
-                String url = met.getBdUrl()+"insertarOfertaPost.php";
+                //String url = met.getBdUrl()+"insertarofertaPost.php";
+                String url="https://salv8.000webhostapp.com/InsertarofertaPost.php";
                 //url = url.replaceAll(" ","%20");
                 insertarDatos(url);
 
@@ -144,7 +145,8 @@ public class PreviewActivity extends AppCompatActivity implements OnMapReadyCall
                         loading.dismiss();
 
                         //Showing toast
-                        Toast.makeText(PreviewActivity.this, volleyError.getMessage().toString(), Toast.LENGTH_LONG).show();
+                        //Toast.makeText(PreviewActivity.this, volleyError.getMessage().toString(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(PreviewActivity.this, "Error", Toast.LENGTH_LONG).show();
                     }
                 }){
             @Override

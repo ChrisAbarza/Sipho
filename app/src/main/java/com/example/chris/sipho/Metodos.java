@@ -11,7 +11,7 @@ public class Metodos {
     private String id;
     private String name;
     private String photoUrl;
-    private String bdUrl ="http://192.168.1.10/sipho/";
+    private String bdUrl ="https://salv8.000webhostapp.com/";
 
     public String getBdUrl() {
         return bdUrl;
