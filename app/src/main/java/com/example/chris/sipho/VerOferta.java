@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -61,6 +62,8 @@ public class VerOferta extends AppCompatActivity implements OnMapReadyCallback, 
     Button btnComentar;
     Profile profile = Profile.getCurrentProfile();
     int idOferta;
+    ListView listaComent;
+    ArrayList<Comentario> Lista;
 
 
 
@@ -82,6 +85,7 @@ public class VerOferta extends AppCompatActivity implements OnMapReadyCallback, 
         TextView txtCategoria = (TextView) findViewById(R.id.textViewCategoriaVer);
         imageViewUsuario = (CircleImageView) findViewById(R.id.imageViewUsuarioOfertaVer);
         ImageView imageViewOferta = (ImageView) findViewById(R.id.imageViewOfertaVer);
+        listaComent = (ListView) findViewById(R.id.lstComent);
 
 
         Oferta off = (Oferta) getIntent().getExtras().getSerializable("oferta");
@@ -94,8 +98,13 @@ public class VerOferta extends AppCompatActivity implements OnMapReadyCallback, 
         lat = off.getLat();
         lng = off.getLng();
 
+        Lista = new ArrayList<Comentario>();
+
+        String url2=met.getBdUrl()+"consultarComent.php?oferta="+off.getId();
+
         URL=met.getBdUrl()+"completarVerOferta.php?nombre="+off.getUsuario();
         buscarDatosExtrasUsuario(URL);
+        buscarComentario(url2);
 
         Glide.with(getApplicationContext())
                 .load(off.getImagen())
@@ -120,6 +129,61 @@ public class VerOferta extends AppCompatActivity implements OnMapReadyCallback, 
             }
         });
 
+    }
+
+    private void buscarComentario(String URL) {
+        Log.i("url",""+URL);
+        RequestQueue queue = Volley.newRequestQueue(this);
+        StringRequest stringRequest =  new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                response = response.replace("][",",");
+                if(response.length()>0){
+                    try {
+                        JSONArray mja = new JSONArray(response);
+                        Log.i("sizejson",""+mja.length());
+                        prepararList(mja);
+
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        Toast.makeText(getApplicationContext(),"Error "+e,Toast.LENGTH_LONG).show();
+                    }catch (NullPointerException s){
+                        s.printStackTrace();
+
+                    }
+
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(VerOferta.this, "Ops Error 1"+error, Toast.LENGTH_SHORT).show();
+
+            }
+        });
+        queue.add(stringRequest);
+
+    }
+
+    private void prepararList(JSONArray mja) {
+        Lista.clear();
+        ArrayList<String> lista = new ArrayList<>();
+        for (int i=0;i<mja.length();i+=6){
+            try {
+                lista.add(mja.getString(i)+",æè"+mja.getString(i+1)+",æè"+mja.getString(i+2)+",æè"+mja.getString(i+3)+",æè"+mja.getString(i+4)+",æè"+mja.getString(i+5));
+            }catch (JSONException e){
+
+            }
+        }
+        for (int m=0;m<lista.size();m++) {
+            String[] slista = lista.get(m).split(",æè");
+            Lista.add(new Comentario(Long.valueOf(slista[0]),slista[1],slista[2],slista[3],slista[4],slista[5]));
+
+        }
+        AdaptadorComentarios miadaptador = new AdaptadorComentarios(getApplicationContext(),Lista);
+        listaComent.setAdapter(miadaptador);
     }
 
     private void insertarDatos(String url) {
