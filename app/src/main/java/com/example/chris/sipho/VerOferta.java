@@ -52,6 +52,7 @@ import static android.R.attr.id;
 import static com.example.chris.sipho.R.id.lstComent;
 import static com.example.chris.sipho.R.id.map;
 import static com.example.chris.sipho.R.id.photoImageView;
+import static com.example.chris.sipho.R.id.textViewNombreUsuarioVer;
 
 public class VerOferta extends AppCompatActivity implements OnMapReadyCallback, AdapterView.OnItemSelectedListener {
     String valoracionOferta,URL;
@@ -145,6 +146,13 @@ public class VerOferta extends AppCompatActivity implements OnMapReadyCallback, 
             public boolean onTouch(View v, MotionEvent event) {
                 v.getParent().requestDisallowInterceptTouchEvent(true);
                 return false;
+            }
+        });
+        txtNombreUsuario.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View arg0) {
+                
+                //Aqui el codigo que queremos que ejecute al ser pulsado
             }
         });
 

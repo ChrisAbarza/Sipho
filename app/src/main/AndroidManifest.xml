@@ -41,7 +41,8 @@
             android:label="Ingresar una oferta" />
         <activity android:name=".PreviewActivity" />
         <activity android:name=".BuscarCategoria" />
-        <activity android:name=".VerOferta"></activity>
+        <activity android:name=".VerOferta" />
+        <activity android:name=".VerUsuario"></activity>
     </application>
 
 </manifest>
