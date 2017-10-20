@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/border"
         android:orientation="horizontal">
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
             <de.hdodenhof.circleimageview.CircleImageView
@@ -28,11 +29,14 @@
 
             <TextView
                 android:id="@+id/textUsrNmeComent"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
                 android:layout_weight="1"
-                android:text="Usuario" />
+                android:text="Usuario"
+                android:textColor="@color/cardview_dark_background"
+                android:textSize="12sp"
+                android:textStyle="bold|italic" />
 
         </LinearLayout>
 
@@ -61,14 +65,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="3dp"
-                android:text="fecha" />
+                android:text="fecha"
+                android:textAlignment="textEnd"
+                android:textColor="@color/cardview_dark_background"
+                android:textStyle="bold|italic" />
 
             <TextView
                 android:id="@+id/textComentComent"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_margin="3dp"
-                android:text="Comentario" />
+                android:text="Comentario"
+                android:textAlignment="textStart"
+                android:textColor="@color/cardview_dark_background"
+                android:textSize="14sp"
+                android:textStyle="bold" />
         </LinearLayout>
 
     </LinearLayout>

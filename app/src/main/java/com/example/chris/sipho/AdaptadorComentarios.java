@@ -58,7 +58,7 @@ public class AdaptadorComentarios extends BaseAdapter {
         TextView coment = (TextView) vista.findViewById(R.id.textComentComent);
         ImageView reco = (ImageView) vista.findViewById(R.id.imageViewComent);
 
-        nomusr.setText(ListaComentario.get(position).getNomusr());
+        nomusr.setText("@"+ListaComentario.get(position).getNomusr());
         fecha.setText(ListaComentario.get(position).getFecha());
         coment.setText(ListaComentario.get(position).getComent());
 

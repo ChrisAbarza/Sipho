@@ -4,6 +4,7 @@ import android.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -11,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -47,6 +49,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 import static android.R.attr.bitmap;
 import static android.R.attr.id;
+import static com.example.chris.sipho.R.id.lstComent;
 import static com.example.chris.sipho.R.id.map;
 import static com.example.chris.sipho.R.id.photoImageView;
 
@@ -64,7 +67,7 @@ public class VerOferta extends AppCompatActivity implements OnMapReadyCallback, 
     int idOferta;
     ListView listaComent;
     ArrayList<Comentario> Lista;
-
+    ScrollView scroll;
 
 
 
@@ -86,6 +89,7 @@ public class VerOferta extends AppCompatActivity implements OnMapReadyCallback, 
         imageViewUsuario = (CircleImageView) findViewById(R.id.imageViewUsuarioOfertaVer);
         ImageView imageViewOferta = (ImageView) findViewById(R.id.imageViewOfertaVer);
         listaComent = (ListView) findViewById(R.id.lstComent);
+        scroll= (ScrollView) findViewById(R.id.ScrollView01);
 
 
         Oferta off = (Oferta) getIntent().getExtras().getSerializable("oferta");
@@ -128,6 +132,22 @@ public class VerOferta extends AppCompatActivity implements OnMapReadyCallback, 
 
             }
         });
+        scroll.setOnTouchListener(new View.OnTouchListener() {
+
+            public boolean onTouch(View v, MotionEvent event) {
+                findViewById(R.id.lstComent).getParent()
+                        .requestDisallowInterceptTouchEvent(false);
+                return false;
+            }
+        });
+        listaComent.setOnTouchListener(new View.OnTouchListener() {
+
+            public boolean onTouch(View v, MotionEvent event) {
+                v.getParent().requestDisallowInterceptTouchEvent(true);
+                return false;
+            }
+        });
+
 
     }
 
@@ -168,7 +188,7 @@ public class VerOferta extends AppCompatActivity implements OnMapReadyCallback, 
     }
 
     private void prepararList(JSONArray mja) {
-        Lista.clear();
+        //Lista.clear();
         ArrayList<String> lista = new ArrayList<>();
         for (int i=0;i<mja.length();i+=6){
             try {
