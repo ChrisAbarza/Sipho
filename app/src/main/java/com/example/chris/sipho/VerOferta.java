@@ -1,6 +1,7 @@
 package com.example.chris.sipho;
 
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -55,7 +56,7 @@ import static com.example.chris.sipho.R.id.photoImageView;
 import static com.example.chris.sipho.R.id.textViewNombreUsuarioVer;
 
 public class VerOferta extends AppCompatActivity implements OnMapReadyCallback, AdapterView.OnItemSelectedListener {
-    String valoracionOferta,URL;
+    String valoracionOferta,URL,idUsuario,fotoPerfil;
     Metodos met = new Metodos();
     TextView nombreCompletoFacebook;
     ImageView imageViewUsuario;
@@ -85,7 +86,7 @@ public class VerOferta extends AppCompatActivity implements OnMapReadyCallback, 
         TextView txtDescripcion = (TextView) findViewById(R.id.textViewDescripcionVer);
         TextView txtPrecio = (TextView) findViewById(R.id.textViewPrecioVer);
         nombreCompletoFacebook = (TextView) findViewById(R.id.textViewNombreCompletoVer);
-        TextView txtNombreUsuario = (TextView) findViewById(R.id.textViewNombreUsuarioVer);
+        final TextView txtNombreUsuario = (TextView) findViewById(R.id.textViewNombreUsuarioVer);
         TextView txtCategoria = (TextView) findViewById(R.id.textViewCategoriaVer);
         imageViewUsuario = (CircleImageView) findViewById(R.id.imageViewUsuarioOfertaVer);
         ImageView imageViewOferta = (ImageView) findViewById(R.id.imageViewOfertaVer);
@@ -151,8 +152,13 @@ public class VerOferta extends AppCompatActivity implements OnMapReadyCallback, 
         txtNombreUsuario.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View arg0) {
-                
-                //Aqui el codigo que queremos que ejecute al ser pulsado
+
+                Intent intent = new Intent(VerOferta.this, VerUsuario.class);
+                intent.putExtra("idUsuario",idUsuario);
+                intent.putExtra("fotoPerfil",fotoPerfil);
+                intent.putExtra("nombreCompleto",nombreCompletoFacebook.getText().toString());
+                intent.putExtra("usrName",txtNombreUsuario.getText().toString());
+                startActivity(intent);
             }
         });
 
@@ -269,12 +275,14 @@ public class VerOferta extends AppCompatActivity implements OnMapReadyCallback, 
                         JSONArray mja = new JSONArray(response);
                         Log.i("sizejson",""+mja.length());
                         ArrayList<String> lista = new ArrayList<>();
-                        lista.add(mja.getString(0)+",æè"+mja.getString(1));
+                        lista.add(mja.getString(0)+",æè"+mja.getString(1)+",æè"+mja.getString(2));
                         for (int m=0;m<lista.size();m++) {
                             String[] slista = lista.get(m).split(",æè");
                             nombreCompletoFacebook.setText(slista[0]);
+                            idUsuario=slista[2];
+                            fotoPerfil=slista[1].toString();
                             Glide.with(getApplicationContext())
-                                    .load(slista[1].toString())
+                                    .load(fotoPerfil)
                                     .into(imageViewUsuario);
 
 
