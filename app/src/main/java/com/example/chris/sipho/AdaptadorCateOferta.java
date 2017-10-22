@@ -25,6 +25,7 @@ public class AdaptadorCateOferta extends BaseAdapter {
 
     Context contexto;
     List<Oferta> ListaOfertas;
+    ImageView imagenCate;
 
     public AdaptadorCateOferta(Context contexto, List<Oferta> listaOfertas) {
         this.contexto = contexto;
@@ -53,7 +54,7 @@ public class AdaptadorCateOferta extends BaseAdapter {
         vista = inflate.inflate(R.layout.ofertas_list_view , null);
 
         ImageView imagenOferta = (ImageView) vista.findViewById(R.id.imageViewOfertaList);
-        //ImageView imagenCate = (ImageView) vista.findViewById(R.id.imageViewCateList);
+        imagenCate = (ImageView) vista.findViewById(R.id.imageViewCateList);
         TextView textFecha = (TextView) vista.findViewById(R.id.textViewFechaList);
         TextView textUsuario = (TextView) vista.findViewById(R.id.textViewUsuarioList);
         TextView textNombre = (TextView) vista.findViewById(R.id.textViewNombreList);
@@ -65,11 +66,44 @@ public class AdaptadorCateOferta extends BaseAdapter {
         textNombre.setText(ListaOfertas.get(position).getNomOferta());
         textPrecio.setText(String.valueOf("$"+ListaOfertas.get(position).getPrecioOferta()));
         textDescripcion.setText(ListaOfertas.get(position).getDescOferta());
+        cargarImagenCate(ListaOfertas.get(position).getCateOferta());
+
 
         Glide.with(getApplicationContext())
                .load(ListaOfertas.get(position).getImagen())
                .into(imagenOferta);
 
         return vista;
+    }
+    private void cargarImagenCate(String cate){
+        switch (cate){
+            case "Comida":
+                imagenCate.setImageResource(R.drawable.comida);
+                break;
+            case "Fiesta":
+                imagenCate.setImageResource(R.drawable.copete);
+                break;
+            case "Actividades y eventos":
+                imagenCate.setImageResource(R.drawable.eventos);
+                break;
+            case "Servicios":
+                imagenCate.setImageResource(R.drawable.servicio);
+                break;
+            case "Moda":
+                imagenCate.setImageResource(R.drawable.moda);
+                break;
+            case "Electrodomésticos":
+                imagenCate.setImageResource(R.drawable.electrodomesticos);
+                break;
+            case "Autos y motos":
+                imagenCate.setImageResource(R.drawable.rueda);
+                break;
+            case "Hogar":
+                imagenCate.setImageResource(R.drawable.casa);
+                break;
+            case "Otros":
+                imagenCate.setImageResource(R.drawable.otros);
+                break;
+        }
     }
 }

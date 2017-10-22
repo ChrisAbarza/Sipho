@@ -139,6 +139,7 @@ public class BuscarCategoria extends AppCompatActivity implements AdapterView.On
         TextView myTextCategoria= (TextView) view;
         categoriaOferta = myTextCategoria.getText().toString();
         String URL = met.getBdUrl()+"buscarPorCategoria.php?cateOferta="+categoriaOferta;
+        URL = URL.replaceAll(" ","%20");
         buscarCategoria(URL);
     }
 

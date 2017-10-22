@@ -59,7 +59,7 @@ public class VerOferta extends AppCompatActivity implements OnMapReadyCallback, 
     String valoracionOferta,URL,idUsuario,fotoPerfil;
     Metodos met = new Metodos();
     TextView nombreCompletoFacebook;
-    ImageView imageViewUsuario;
+    ImageView imageViewUsuario, imagenCate;
     private GoogleMap mMap;
     Double lat,lng;
     Spinner valoracion;
@@ -92,6 +92,7 @@ public class VerOferta extends AppCompatActivity implements OnMapReadyCallback, 
         ImageView imageViewOferta = (ImageView) findViewById(R.id.imageViewOfertaVer);
         listaComent = (ListView) findViewById(R.id.lstComent);
         scroll= (ScrollView) findViewById(R.id.ScrollView01);
+        imagenCate = (ImageView) findViewById(R.id.imageViewCateVer);
 
 
         Oferta off = (Oferta) getIntent().getExtras().getSerializable("oferta");
@@ -103,6 +104,8 @@ public class VerOferta extends AppCompatActivity implements OnMapReadyCallback, 
         txtCategoria.setText(off.getCateOferta());
         lat = off.getLat();
         lng = off.getLng();
+
+        cargarImagenCate(off.getCateOferta());
 
         Lista = new ArrayList<Comentario>();
 
@@ -168,6 +171,37 @@ public class VerOferta extends AppCompatActivity implements OnMapReadyCallback, 
         });
 
 
+    }
+    private void cargarImagenCate(String cate){
+        switch (cate){
+            case "Comida":
+                imagenCate.setImageResource(R.drawable.comida);
+                break;
+            case "Fiesta":
+                imagenCate.setImageResource(R.drawable.copete);
+                break;
+            case "Actividades y eventos":
+                imagenCate.setImageResource(R.drawable.eventos);
+                break;
+            case "Servicios":
+                imagenCate.setImageResource(R.drawable.servicio);
+                break;
+            case "Moda":
+                imagenCate.setImageResource(R.drawable.moda);
+                break;
+            case "Electrodomésticos":
+                imagenCate.setImageResource(R.drawable.electrodomesticos);
+                break;
+            case "Autos y motos":
+                imagenCate.setImageResource(R.drawable.rueda);
+                break;
+            case "Hogar":
+                imagenCate.setImageResource(R.drawable.casa);
+                break;
+            case "Otros":
+                imagenCate.setImageResource(R.drawable.otros);
+                break;
+        }
     }
 
     private void buscarComentario(String URL) {

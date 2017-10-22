@@ -35,7 +35,7 @@
                     android:layout_marginLeft="10dp"
                     android:layout_weight="1"
                     android:cropToPadding="true"
-                    android:scaleType="fitXY"
+                    android:scaleType="fitCenter"
                     app:srcCompat="@drawable/comida" />
 
                 <LinearLayout
