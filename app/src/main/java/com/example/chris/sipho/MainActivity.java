@@ -238,6 +238,8 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_seguidos) {
 
         } else if (id == R.id.nav_mis_publicaciones) {
+            Intent intent = new Intent(this, MisPublicaciones.class);
+            startActivity(intent);
 
         } else if (id == R.id.nav_ayuda) {
 

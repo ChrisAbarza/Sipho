@@ -37,11 +37,17 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".NewOffActivity" android:parentActivityName=".MainActivity" />
-        <activity android:name=".PreviewActivity" android:parentActivityName=".NewOffActivity" />
-        <activity android:name=".BuscarCategoria" android:parentActivityName=".MainActivity" />
+            android:name=".NewOffActivity"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".PreviewActivity"
+            android:parentActivityName=".NewOffActivity" />
+        <activity
+            android:name=".BuscarCategoria"
+            android:parentActivityName=".MainActivity" />
         <activity android:name=".VerOferta" />
-        <activity android:name=".VerUsuario"></activity>
+        <activity android:name=".VerUsuario" />
+        <activity android:name=".MisPublicaciones" android:parentActivityName=".MainActivity"></activity>
     </application>
 
 </manifest>
