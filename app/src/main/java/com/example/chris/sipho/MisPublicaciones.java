@@ -49,7 +49,7 @@ public class MisPublicaciones extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Oferta off = (Oferta) parent.getItemAtPosition(position);
 
-                Intent ir = new Intent(getApplicationContext(), VerOferta.class);
+                Intent ir = new Intent(getApplicationContext(), ModificarOffActivity.class);
                 ir.putExtra("oferta", (Serializable) off);
                 startActivity(ir);
             }

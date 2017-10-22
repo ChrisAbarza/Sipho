@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.example.chris.sipho.CustomScrollView xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scrollViewPreview"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/ScrollView01"
-    android:fillViewport="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:scrollbarStyle="insideOverlay">
+    android:fillViewport="true"
+    android:orientation="vertical">
+
 
     <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -39,9 +40,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.3"
-            tools:layout_editor_absoluteX="0dp"
-            tools:layout_editor_absoluteY="208dp" />
+            app:layout_constraintGuide_percent="0.26" />
 
         <ImageView
             android:id="@+id/imageViewOferta"
@@ -179,7 +178,7 @@
             android:id="@+id/mapPreview"
             android:name="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="0dp"
-            android:layout_height="175dp"
+            android:layout_height="250dp"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
             android:layout_marginTop="10dp"
@@ -190,4 +189,5 @@
             tools:context=".PreviewActivity" />
 
     </android.support.constraint.ConstraintLayout>
-</ScrollView>
+
+</com.example.chris.sipho.CustomScrollView>

@@ -66,6 +66,7 @@ public class PreviewActivity extends AppCompatActivity implements OnMapReadyCall
         Button btnCancelar = (Button) findViewById(R.id.buttonCancelarPreview);
         Button btnPublicar = (Button) findViewById(R.id.buttonPublicarPreview);
         ImageView imageViewOfertaPreview = (ImageView) findViewById(R.id.imageViewOferta);
+        CustomScrollView myScrollView = (CustomScrollView) findViewById(R.id.scrollViewPreview);
 
 
         Intent intent = getIntent();
