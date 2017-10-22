@@ -1,9 +1,12 @@
 package com.example.chris.sipho;
 
 import android.content.Intent;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -43,13 +46,14 @@ public class BuscarCategoria extends AppCompatActivity implements AdapterView.On
         setContentView(R.layout.activity_buscar_categoria);
 
 
-
         categoria = (Spinner) findViewById(R.id.spinnerOferta);
         listaOferta = (ListView) findViewById(R.id.lstOferta);
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.opcionesCategoria, android.R.layout.simple_spinner_item);
         categoria.setAdapter(adapter);
         categoria.setOnItemSelectedListener(this);
+
+        setupActionBar();
 
         Lista = new ArrayList<Oferta>();
 
@@ -64,6 +68,14 @@ public class BuscarCategoria extends AppCompatActivity implements AdapterView.On
             }
         });
 
+
+    }
+    private void setupActionBar(){
+        ActionBar actionBar = getSupportActionBar();
+        if(actionBar != null){
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setTitle("Búsqueda por categoría");
+        }
     }
 
     private void buscarCategoria(String URL){

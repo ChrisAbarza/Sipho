@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -82,6 +83,8 @@ public class NewOffActivity extends AppCompatActivity implements AdapterView.OnI
         lat = llegada.getDoubleExtra(MainActivity.LATITUD, 0.0);
         lng = llegada.getDoubleExtra(MainActivity.LONGITUD, 0.0);
 
+        setupActionBar();
+
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.opcionesCategoria, android.R.layout.simple_spinner_item);
         categoria.setAdapter(adapter);
@@ -140,6 +143,14 @@ public class NewOffActivity extends AppCompatActivity implements AdapterView.OnI
                 startActivity(intent);
             }
         });
+    }
+
+    private void setupActionBar(){
+        ActionBar actionBar = getSupportActionBar();
+        if(actionBar != null){
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setTitle("¡Ingresa una oferta!");
+        }
     }
 
     @Override

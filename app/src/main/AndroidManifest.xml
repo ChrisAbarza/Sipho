@@ -37,10 +37,9 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".NewOffActivity"
-            android:label="Ingresar una oferta" />
-        <activity android:name=".PreviewActivity" />
-        <activity android:name=".BuscarCategoria" />
+            android:name=".NewOffActivity" android:parentActivityName=".MainActivity" />
+        <activity android:name=".PreviewActivity" android:parentActivityName=".NewOffActivity" />
+        <activity android:name=".BuscarCategoria" android:parentActivityName=".MainActivity" />
         <activity android:name=".VerOferta" />
         <activity android:name=".VerUsuario"></activity>
     </application>

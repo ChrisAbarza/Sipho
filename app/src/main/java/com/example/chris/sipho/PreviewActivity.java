@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Base64;
@@ -90,6 +91,8 @@ public class PreviewActivity extends AppCompatActivity implements OnMapReadyCall
 
         imageViewOfertaPreview.setImageBitmap(bitmap);
 
+        setupActionBar();
+
         Glide.with(getApplicationContext())
                 .load(imgUsuario)
                 .into(imageViewPreview);
@@ -118,6 +121,13 @@ public class PreviewActivity extends AppCompatActivity implements OnMapReadyCall
         mapFragment.getMapAsync(this);
 
     }
+    private void setupActionBar(){
+        ActionBar actionBar = getSupportActionBar();
+        if(actionBar != null){
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setTitle("Previsualizar");
+        }
+    }
     private void generarIDAleatorio(){
         Random random = new Random();
         random.setSeed(System.currentTimeMillis());
@@ -126,7 +136,7 @@ public class PreviewActivity extends AppCompatActivity implements OnMapReadyCall
 
     }
     public void insertarDatos(String url){
-        final ProgressDialog loading = ProgressDialog.show(this,"Uploading...","Please wait...",false,false);
+        final ProgressDialog loading = ProgressDialog.show(this,"Cargando...","Espere...",false,false);
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override

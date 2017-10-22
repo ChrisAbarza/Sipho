@@ -111,8 +111,11 @@ public class VerOferta extends AppCompatActivity implements OnMapReadyCallback, 
         String url2=met.getBdUrl()+"consultarComent.php?oferta="+off.getId();
 
         URL=met.getBdUrl()+"completarVerOferta.php?nombre="+off.getUsuario();
+
         buscarDatosExtrasUsuario(URL);
         buscarComentario(url2);
+
+
 
         Glide.with(getApplicationContext())
                 .load(off.getImagen())
@@ -220,6 +223,7 @@ public class VerOferta extends AppCompatActivity implements OnMapReadyCallback, 
         }
         AdaptadorComentarios miadaptador = new AdaptadorComentarios(getApplicationContext(),Lista);
         listaComent.setAdapter(miadaptador);
+        scroll.scrollTo(0,0);
     }
 
     private void insertarDatos(String url) {
