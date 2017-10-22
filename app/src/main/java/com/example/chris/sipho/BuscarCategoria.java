@@ -64,16 +64,6 @@ public class BuscarCategoria extends AppCompatActivity implements AdapterView.On
             }
         });
 
-
-
-
-        //String URL = met.getBdUrl()+"buscarPorCategoria.php?cateOferta=Comida";
-
-
-
-
-
-
     }
 
     private void buscarCategoria(String URL){

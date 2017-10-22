@@ -181,13 +181,15 @@
 
         <Spinner
             android:id="@+id/spinnerComentario"
-            android:layout_width="100dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintLeft_toRightOf="@+id/editTextComentario"
             app:layout_constraintTop_toBottomOf="@+id/mapVerOferta"
             android:layout_marginLeft="5dp"
             android:layout_marginTop="10dp"
-            android:layout_marginStart="5dp" />
+            android:layout_marginStart="5dp"
+            android:layout_marginRight="8dp"
+            app:layout_constraintRight_toRightOf="parent" />
 
 
 
@@ -204,12 +206,14 @@
 
         <EditText
             android:id="@+id/editTextComentario"
+            style="@style/Widget.AppCompat.EditText"
             android:layout_width="0dp"
             android:layout_height="100dp"
             android:layout_marginEnd="5dp"
             android:layout_marginRight="5dp"
             android:layout_marginTop="10dp"
             android:ems="10"
+            android:hint="Comenta"
             android:inputType="textMultiLine"
             android:maxLength="250"
             app:layout_constraintHorizontal_bias="0.0"

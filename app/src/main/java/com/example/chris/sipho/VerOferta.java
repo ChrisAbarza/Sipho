@@ -106,6 +106,8 @@ public class VerOferta extends AppCompatActivity implements OnMapReadyCallback, 
 
         Lista = new ArrayList<Comentario>();
 
+        valoracion.setPrompt("¿Recomiendas?");
+
         String url2=met.getBdUrl()+"consultarComent.php?oferta="+off.getId();
 
         URL=met.getBdUrl()+"completarVerOferta.php?nombre="+off.getUsuario();
