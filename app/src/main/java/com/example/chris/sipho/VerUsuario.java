@@ -6,7 +6,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,6 +19,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+import com.facebook.Profile;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -26,6 +29,9 @@ import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import static android.provider.ContactsContract.CommonDataKinds.Website.URL;
+import static com.example.chris.sipho.R.id.idTextView;
+
 public class VerUsuario extends AppCompatActivity {
 
     CircleImageView fotoDeFace;
@@ -33,6 +39,10 @@ public class VerUsuario extends AppCompatActivity {
     ListView listViewOfertas;
     String fotoPerfil,nombreFace,usrFace,idUsr;
     ArrayList<Oferta> Lista1;
+    String urlPubli,cantidadPubli,urlSiSigue,urlSeguir;
+    int bandera;
+    Profile profile= Profile.getCurrentProfile();
+    Button btnSeguir;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,15 +58,26 @@ public class VerUsuario extends AppCompatActivity {
         seguidores = (TextView) findViewById(R.id.textViewSeguidores);
         seguidos = (TextView) findViewById(R.id.textViewSeguidos);
         listViewOfertas = (ListView) findViewById(R.id.lstOfertasVerUsr);
+        btnSeguir = (Button) findViewById(R.id.buttonSeguirUsr);
 
         fotoPerfil = intent.getStringExtra("fotoPerfil");
         nombreFace = intent.getStringExtra("nombreCompleto");
         usrFace = intent.getStringExtra("usrName");
         idUsr = intent.getStringExtra("idUsuario");
 
-        Metodos met = new Metodos();
+        final Metodos met = new Metodos();
         Lista1 = new ArrayList<Oferta>();
         String url=met.getBdUrl()+"buscarPorUsuario.php?usr="+idUsr;
+        urlPubli = met.getBdUrl()+"contarPublicaciones.php?idUsuario="+idUsr;
+        urlSiSigue = met.getBdUrl()+"consultaSeguidor.php?idSeguido="+idUsr+"&idSeguidor="+profile.getId();
+
+        if(idUsr.equals(profile.getId())){
+            btnSeguir.setVisibility(View.GONE);
+        }else{
+            btnSeguir.setVisibility(View.VISIBLE);
+        }
+        loSigue(urlSiSigue);
+        contarPublicaciones(urlPubli);
 
         nombreCompleto.setText(nombreFace);
         nombreUsuario.setText(usrFace);
@@ -66,6 +87,31 @@ public class VerUsuario extends AppCompatActivity {
                 .into(fotoDeFace);
 
         buscarOferta(url);
+        switch (bandera){
+            case 0:
+                btnSeguir.setBackgroundResource(R.drawable.noseguido);
+                break;
+            case 1:
+                btnSeguir.setBackgroundResource(R.drawable.seguido);
+                break;
+        }
+
+        btnSeguir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switch (bandera){
+                    case 0:
+                        urlSeguir="https://salv8.000webhostapp.com/seguirUsuario.php?seguido="+idUsr+"&seguidor="+profile.getId();
+                        bandera=1;
+                        break;
+                    case 1:
+                        urlSeguir="https://salv8.000webhostapp.com/dejarSeguir.php?seguido="+idUsr+"&seguidor="+profile.getId();
+                        bandera=0;
+                        break;
+                }
+                ejecutarSeguir(urlSeguir);
+            }
+        });
 
         listViewOfertas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -77,6 +123,109 @@ public class VerUsuario extends AppCompatActivity {
                 startActivity(ir);
             }
         });
+
+
+    }
+
+    private void ejecutarSeguir(String URL) {
+        Log.i("url",""+URL);
+
+        RequestQueue queue = Volley.newRequestQueue(this);
+        StringRequest stringRequest =  new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                switch (bandera){
+                    case 0:
+                        btnSeguir.setBackgroundResource(R.drawable.noseguido);
+                        Toast.makeText(VerUsuario.this, "dejar de seguir", Toast.LENGTH_SHORT).show();
+                        break;
+
+                    case 1:
+                        btnSeguir.setBackgroundResource(R.drawable.seguido);
+                        Toast.makeText(VerUsuario.this, "Siguiendo", Toast.LENGTH_SHORT).show();
+                        break;
+                }
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(VerUsuario.this, "Ops Error", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+        queue.add(stringRequest);
+    }
+
+    private void contarPublicaciones (String URL){
+        Log.i("url",""+URL);
+
+        RequestQueue queue = Volley.newRequestQueue(this);
+        StringRequest stringRequest =  new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                try {
+                    JSONArray ja = new JSONArray(response);
+                    cantidadPubli = ja.getString(0);
+                    if(cantidadPubli.equals("")){
+                        ofertasTotales.setText("0");
+
+                    }else{
+                        ofertasTotales.setText(cantidadPubli);
+                    }
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Toast.makeText(getApplicationContext(),"Error "+e,Toast.LENGTH_LONG).show();
+                }
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(VerUsuario.this, "Ops Error", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+        queue.add(stringRequest);
+
+    }
+    private void loSigue (String URL){
+        Log.i("url",""+URL);
+
+        RequestQueue queue = Volley.newRequestQueue(this);
+        StringRequest stringRequest =  new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                try {
+                    JSONArray ja ;
+                    ja = new JSONArray(response);
+                    btnSeguir.setBackgroundResource(R.drawable.seguido);
+
+                    bandera = 1;
+
+
+
+                } catch (JSONException e) {
+                    btnSeguir.setBackgroundResource(R.drawable.noseguido);
+                    bandera = 0;
+                }
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(VerUsuario.this, "Ops Error", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+        queue.add(stringRequest);
 
     }
     private void buscarOferta(String URL){
