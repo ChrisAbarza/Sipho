@@ -60,6 +60,8 @@ public class ModificarOffActivity extends AppCompatActivity implements AdapterVi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_off);
 
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.opcionesCategoria, android.R.layout.simple_spinner_item);
+
         categoria = (Spinner) findViewById(R.id.spCategoria);
         nombre = (EditText) findViewById(R.id.editTextNombre);
         descripcion= (EditText) findViewById(R.id.editTextDescripcion);
@@ -75,7 +77,7 @@ public class ModificarOffActivity extends AppCompatActivity implements AdapterVi
         nombre.setText(off.getNomOferta());
         descripcion.setText(off.getDescOferta());
         precio.setText(String.valueOf(off.getPrecioOferta()));
-        categoria.setPrompt(off.getCateOferta());
+
         ban = 0;
 
         Glide.with(getApplicationContext())
@@ -84,15 +86,11 @@ public class ModificarOffActivity extends AppCompatActivity implements AdapterVi
 
         setupActionBar();
 
-
-
-
-
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.opcionesCategoria, android.R.layout.simple_spinner_item);
         categoria.setAdapter(adapter);
         categoria.setOnItemSelectedListener(this);
 
         btnCancelar.setText("Eliminar");
+
 
         buttonChoose.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -151,6 +149,8 @@ public class ModificarOffActivity extends AppCompatActivity implements AdapterVi
                 startActivity(intent);
             }
         });
+
+        categoria.setSelection(adapter.getPosition(off.getCateOferta()));
     }
     private void setupActionBar(){
         ActionBar actionBar = getSupportActionBar();
