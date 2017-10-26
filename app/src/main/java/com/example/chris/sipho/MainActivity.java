@@ -46,6 +46,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -227,9 +228,8 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_index) {
+        if (id == R.id.nav_perfil) {
             Intent intent = new Intent(this, MainActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
         } else if (id == R.id.nav_categoria) {
             Intent intent = new Intent(this, BuscarCategoria.class);
@@ -382,9 +382,9 @@ public class MainActivity extends AppCompatActivity
     }
     private void insertarMarcadores(JSONArray mja){
         ArrayList<String> lista = new ArrayList<>();
-        for (int i=0;i<mja.length();i+=3){
+        for (int i=0;i<mja.length();i+=4){
             try {
-                  lista.add(mja.getString(i)+",æè"+mja.getString(i+1)+",æè"+mja.getString(i+2));
+                  lista.add(mja.getString(i)+",æè"+mja.getString(i+1)+",æè"+mja.getString(i+2)+",æè"+mja.getString(i+3));
             }catch (JSONException e){
 
             }
@@ -392,11 +392,81 @@ public class MainActivity extends AppCompatActivity
         for (int m=0;m<lista.size();m++){
             String[] slatlng = lista.get(m).split(",æè");
             LatLng latLng = new LatLng(Double.valueOf(slatlng[1]),Double.valueOf(slatlng[2]));
-            map.addMarker(new MarkerOptions()
-                    .title(slatlng[0])
-                    .position(latLng)
+            switch (slatlng[3]){
+                case "Comida":
+                    map.addMarker(new MarkerOptions()
+                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.comida))
+                            .title(slatlng[0])
+                            .position(latLng)
 
-            );
+                    );
+                    break;
+                case "Fiesta":
+                    map.addMarker(new MarkerOptions()
+                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.copete))
+                            .title(slatlng[0])
+                            .position(latLng)
+
+                    );
+                    break;
+                case "Actividades y eventos":
+                    map.addMarker(new MarkerOptions()
+                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.eventos))
+                            .title(slatlng[0])
+                            .position(latLng)
+
+                    );
+                    break;
+                case "Servicios":
+                    map.addMarker(new MarkerOptions()
+                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.servicio))
+                            .title(slatlng[0])
+                            .position(latLng)
+
+                    );
+                    break;
+                case "Moda":
+                    map.addMarker(new MarkerOptions()
+                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.moda))
+                            .title(slatlng[0])
+                            .position(latLng)
+
+                    );
+                    break;
+                case "Electrodomésticos":
+                    map.addMarker(new MarkerOptions()
+                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.electrodomesticos))
+                            .title(slatlng[0])
+                            .position(latLng)
+
+                    );
+                    break;
+                case "Autos y motos":
+                    map.addMarker(new MarkerOptions()
+                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.rueda))
+                            .title(slatlng[0])
+                            .position(latLng)
+
+                    );
+                    break;
+                case "Hogar":
+                    map.addMarker(new MarkerOptions()
+                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.casa))
+                            .title(slatlng[0])
+                            .position(latLng)
+
+                    );
+                    break;
+                case "Otros":
+                    map.addMarker(new MarkerOptions()
+                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.otros))
+                            .title(slatlng[0])
+                            .position(latLng)
+
+                    );
+                    break;
+            }
+
         }
 
     }

@@ -3,9 +3,9 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_index"
+            android:id="@+id/nav_perfil"
             android:icon="@drawable/ic_home_black_24dp"
-            android:title="Inicio" />
+            android:title="Mi perfil" />
         <item
             android:id="@+id/nav_categoria"
             android:icon="@drawable/ic_store_black_24dp"

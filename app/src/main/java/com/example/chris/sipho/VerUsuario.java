@@ -72,6 +72,8 @@ public class VerUsuario extends AppCompatActivity {
         String url=met.getBdUrl()+"buscarPorUsuario.php?usr="+idUsr;
         urlPubli = met.getBdUrl()+"contarPublicaciones.php?idUsuario="+idUsr;
         urlSiSigue = met.getBdUrl()+"consultaSeguidor.php?idSeguido="+idUsr+"&idSeguidor="+profile.getId();
+        String urlSiguiendo=met.getBdUrl()+"contarSiguiendo.php?idUsuario="+idUsr;
+        String urlSeguido=met.getBdUrl()+"contarSeguido.php?idUsuario="+idUsr;
 
         if(idUsr.equals(profile.getId())){
             btnSeguir.setVisibility(View.GONE);
@@ -80,6 +82,9 @@ public class VerUsuario extends AppCompatActivity {
         }
         loSigue(urlSiSigue);
         contarPublicaciones(urlPubli);
+        contarSiguiendo(urlSiguiendo);
+        contarSeguido(urlSeguido);
+
 
         nombreCompleto.setText(nombreFace);
         nombreUsuario.setText(usrFace);
@@ -130,6 +135,66 @@ public class VerUsuario extends AppCompatActivity {
 
     }
 
+    private void contarSeguido(String URL) {
+        Log.i("url",""+URL);
+
+        RequestQueue queue = Volley.newRequestQueue(this);
+        StringRequest stringRequest =  new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                try {
+                    JSONArray ja = new JSONArray(response);
+                    seguidores.setText(ja.getString(0));
+
+
+
+                } catch (JSONException e) {
+                    seguidores.setText("0");
+                }
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(VerUsuario.this, "Ops Error", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+        queue.add(stringRequest);
+    }
+    private void contarSiguiendo(String URL) {
+        Log.i("url",""+URL);
+
+        RequestQueue queue = Volley.newRequestQueue(this);
+        StringRequest stringRequest =  new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                try {
+                    JSONArray ja = new JSONArray(response);
+                    seguidos.setText(ja.getString(0));
+
+
+
+                } catch (JSONException e) {
+                    seguidos.setText("0");
+                }
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(VerUsuario.this, "Ops Error", Toast.LENGTH_SHORT).show();
+                seguidos.setText("0");
+
+            }
+        });
+        queue.add(stringRequest);
+    }
+
     private void ejecutarSeguir(String URL) {
         Log.i("url",""+URL);
 
@@ -172,17 +237,12 @@ public class VerUsuario extends AppCompatActivity {
                 try {
                     JSONArray ja = new JSONArray(response);
                     cantidadPubli = ja.getString(0);
-                    if(cantidadPubli.equals("")){
-                        ofertasTotales.setText("0");
+                    ofertasTotales.setText(cantidadPubli);
 
-                    }else{
-                        ofertasTotales.setText(cantidadPubli);
-                    }
 
 
                 } catch (JSONException e) {
-                    e.printStackTrace();
-                    Toast.makeText(getApplicationContext(),"Error "+e,Toast.LENGTH_LONG).show();
+                    ofertasTotales.setText("0");
                 }
 
 

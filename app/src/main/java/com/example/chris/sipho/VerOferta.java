@@ -242,7 +242,7 @@ public class VerOferta extends AppCompatActivity implements OnMapReadyCallback, 
     }
 
     private void prepararList(JSONArray mja) {
-        //Lista.clear();
+        Lista.clear();
         ArrayList<String> lista = new ArrayList<>();
         for (int i=0;i<mja.length();i+=6){
             try {
