@@ -1,6 +1,7 @@
 package com.example.chris.sipho;
 
 import android.app.FragmentTransaction;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -304,6 +305,7 @@ public class VerOferta extends AppCompatActivity implements OnMapReadyCallback, 
 
     private void buscarDatosExtrasUsuario(String URL){
         Log.i("url",""+URL);
+        final ProgressDialog loading = ProgressDialog.show(this,"Cargando...","Espere...",false,false);
         RequestQueue queue = Volley.newRequestQueue(this);
         StringRequest stringRequest =  new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {
             @Override
@@ -316,6 +318,7 @@ public class VerOferta extends AppCompatActivity implements OnMapReadyCallback, 
                         Log.i("sizejson",""+mja.length());
                         ArrayList<String> lista = new ArrayList<>();
                         lista.add(mja.getString(0)+",æè"+mja.getString(1)+",æè"+mja.getString(2));
+
                         for (int m=0;m<lista.size();m++) {
                             String[] slista = lista.get(m).split(",æè");
                             nombreCompletoFacebook.setText(slista[0]);
@@ -324,6 +327,7 @@ public class VerOferta extends AppCompatActivity implements OnMapReadyCallback, 
                             Glide.with(getApplicationContext())
                                     .load(fotoPerfil)
                                     .into(imageViewUsuario);
+                            loading.dismiss();
 
 
 
@@ -332,9 +336,11 @@ public class VerOferta extends AppCompatActivity implements OnMapReadyCallback, 
 
                     } catch (JSONException e) {
                         e.printStackTrace();
+                        loading.dismiss();
                         Toast.makeText(getApplicationContext(),"Error "+e,Toast.LENGTH_LONG).show();
                     }catch (NullPointerException s){
                         s.printStackTrace();
+                        loading.dismiss();
 
                     }
 

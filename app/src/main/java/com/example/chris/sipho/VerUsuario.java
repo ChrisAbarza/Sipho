@@ -1,5 +1,6 @@
 package com.example.chris.sipho;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -50,6 +51,7 @@ public class VerUsuario extends AppCompatActivity {
         setContentView(R.layout.activity_ver_usuario);
 
         Intent intent = getIntent();
+
 
         fotoDeFace = (CircleImageView) findViewById(R.id.circleImageViewVerUsr);
         nombreCompleto = (TextView) findViewById(R.id.textViewNomComVerUsr);
@@ -123,6 +125,7 @@ public class VerUsuario extends AppCompatActivity {
                 startActivity(ir);
             }
         });
+
 
 
     }
