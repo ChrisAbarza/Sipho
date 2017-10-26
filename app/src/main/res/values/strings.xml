@@ -8,6 +8,17 @@
 
     <string name="facebook_app_id" translatable="false">1746793515620627</string>
     <string name="baseDatos" translatable="false">"http://192.168.1.7/sipho/"</string>
+    <string name="ofertas_de_seguidos">Ofertas de Seguidos</string>
+    <string name="mis_publicaciones">Mis Publicaciones:</string>
+    <string name="selecciona_la_categoria">Selecciona la categoria</string>
+    <string name="nombra_tu_oferta">Nombra tu oferta</string>
+    <string name="describe_la_oferta">Describe la oferta</string>
+    <string name="precio">Precio</string>
+    <string name="subir_de_galeria">Subir de galeria</string>
+    <string name="subir_de_camara">Subir de camara</string>
+    <string name="previsualizar">Previsualizar</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="todo">TODO</string>
 
 
 </resources>

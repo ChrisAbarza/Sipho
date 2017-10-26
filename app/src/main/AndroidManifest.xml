@@ -47,9 +47,14 @@
             android:parentActivityName=".MainActivity" />
         <activity android:name=".VerOferta" />
         <activity android:name=".VerUsuario" />
-        <activity android:name=".MisPublicaciones" android:parentActivityName=".MainActivity"></activity>
-        <activity android:name=".ModificarOffActivity" android:parentActivityName=".MisPublicaciones" />
+        <activity
+            android:name=".MisPublicaciones"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".ModificarOffActivity"
+            android:parentActivityName=".MisPublicaciones" />
         <activity android:name=".PreviewModificar" />
+        <activity android:name=".BuscarSeguido" android:parentActivityName=".MainActivity"></activity>
     </application>
 
 </manifest>

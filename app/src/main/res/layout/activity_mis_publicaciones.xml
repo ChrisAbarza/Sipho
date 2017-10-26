@@ -13,7 +13,7 @@
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
-        android:text="Mis Publicaciones:"
+        android:text="@string/mis_publicaciones"
         android:textAlignment="center"
         android:textColor="@color/cardview_dark_background"
         android:textSize="24sp"
