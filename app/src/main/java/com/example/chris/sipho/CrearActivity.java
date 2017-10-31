@@ -42,14 +42,15 @@ public class CrearActivity extends AppCompatActivity {
 
     private ProfileTracker profileTracker;
 
+
+    Profile profile = Profile.getCurrentProfile();
+
     Metodos met = new Metodos();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crear);
-
-        Profile profile = Profile.getCurrentProfile();
         met.guardarDatosFacebook(profile);
 
 
@@ -72,9 +73,17 @@ public class CrearActivity extends AppCompatActivity {
         btnCrear.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 String nombre = editTextCrear.getText().toString();
-                String insertar = met.getBdUrl()+"registro.php?id="+id+"&nombre="+nombre+"&completo="+met.getName()+"&img="+met.getPhotoUrl();
-                insertar = insertar.replaceAll(" ","%20");
-                insertarDatos(insertar);
+                if(nombre.isEmpty()){
+                    editTextCrear.setError("¡Ingresa tu nombre de usuario!");
+                }else{
+                    if(nombre.length() < 3){
+                        editTextCrear.setError("Minimo 3 caracteres");
+                    }else {
+                        String existe= met.getBdUrl()+"completarVerOferta.php?nombre="+nombre;
+                        buscarExistencia(existe);
+                    }
+                }
+
 
             }
         });
@@ -82,6 +91,36 @@ public class CrearActivity extends AppCompatActivity {
 
 
 
+    }
+    public void buscarExistencia(String URL){
+        Log.i("url",""+URL);
+
+        RequestQueue queue = Volley.newRequestQueue(this);
+        StringRequest stringRequest =  new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                try {
+                    JSONArray ja;
+                    ja = new JSONArray(response);
+                    Toast.makeText(CrearActivity.this, "Usuario ya existe", Toast.LENGTH_SHORT).show();
+
+                } catch (JSONException e) {
+                    String insertar = met.getBdUrl()+"registro.php?id="+profile.getId()+"&nombre="+editTextCrear.getText().toString()+"&completo="+met.getName()+"&img="+met.getPhotoUrl();
+                    insertar = insertar.replaceAll(" ","%20");
+                    insertarDatos(insertar);
+                }
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(CrearActivity.this, "Ops Error", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+        queue.add(stringRequest);
     }
     public void insertarDatos(String URL){
         Log.i("url",""+URL);
