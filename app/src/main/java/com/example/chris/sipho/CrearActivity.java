@@ -19,6 +19,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.signature.StringSignature;
 import com.facebook.Profile;
 import com.facebook.ProfileTracker;
 
@@ -114,6 +115,7 @@ public class CrearActivity extends AppCompatActivity {
 
         Glide.with(getApplicationContext())
                 .load(photoUrl)
+                .signature((new StringSignature(String.valueOf(System.currentTimeMillis()))))
                 .into(imageViewCrear);
     }
 

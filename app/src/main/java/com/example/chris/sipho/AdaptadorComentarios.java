@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.signature.StringSignature;
 
 import java.util.List;
 
@@ -64,6 +65,7 @@ public class AdaptadorComentarios extends BaseAdapter {
 
         Glide.with(getApplicationContext())
                 .load(ListaComentario.get(position).getImg())
+                .signature((new StringSignature(String.valueOf(System.currentTimeMillis()))))
                 .into(imgusr);
 
         if(ListaComentario.get(position).getValoracion().equals("Si")){

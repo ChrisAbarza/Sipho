@@ -23,6 +23,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.signature.StringSignature;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -96,6 +97,7 @@ public class PreviewActivity extends AppCompatActivity implements OnMapReadyCall
 
         Glide.with(getApplicationContext())
                 .load(imgUsuario)
+                .signature((new StringSignature(String.valueOf(System.currentTimeMillis()))))
                 .into(imageViewPreview);
 
         btnCancelar.setOnClickListener(new View.OnClickListener() {

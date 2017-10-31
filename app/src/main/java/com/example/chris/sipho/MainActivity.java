@@ -36,6 +36,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.signature.StringSignature;
 import com.facebook.AccessToken;
 import com.facebook.Profile;
 import com.facebook.ProfileTracker;
@@ -187,6 +188,7 @@ public class MainActivity extends AppCompatActivity
 
         Glide.with(getApplicationContext())
                 .load(photoUrl)
+                .signature((new StringSignature(String.valueOf(System.currentTimeMillis()))))
                 .into(photoImageView);
     }
 

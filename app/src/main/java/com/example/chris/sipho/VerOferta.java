@@ -27,6 +27,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.signature.StringSignature;
 import com.facebook.Profile;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -123,6 +124,7 @@ public class VerOferta extends AppCompatActivity implements OnMapReadyCallback, 
 
         Glide.with(getApplicationContext())
                 .load(off.getImagen())
+                .signature((new StringSignature(String.valueOf(System.currentTimeMillis()))))
                 .into(imageViewOferta);
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()

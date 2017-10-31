@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.signature.StringSignature;
 
 import java.util.List;
 
@@ -71,6 +72,7 @@ public class AdaptadorCateOferta extends BaseAdapter {
 
         Glide.with(getApplicationContext())
                .load(ListaOfertas.get(position).getImagen())
+                .signature((new StringSignature(String.valueOf(System.currentTimeMillis()))))
                .into(imagenOferta);
 
         return vista;

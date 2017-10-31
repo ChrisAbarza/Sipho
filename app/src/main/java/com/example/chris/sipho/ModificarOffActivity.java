@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.signature.StringSignature;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -82,6 +83,7 @@ public class ModificarOffActivity extends AppCompatActivity implements AdapterVi
 
         Glide.with(getApplicationContext())
                 .load(off.getImagen())
+                .signature((new StringSignature(String.valueOf(System.currentTimeMillis()))))
                 .into(imageView);
 
         setupActionBar();

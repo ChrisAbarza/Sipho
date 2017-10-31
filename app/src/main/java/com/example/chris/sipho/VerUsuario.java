@@ -20,6 +20,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.signature.StringSignature;
 import com.facebook.Profile;
 
 import org.json.JSONArray;
@@ -91,6 +92,7 @@ public class VerUsuario extends AppCompatActivity {
 
         Glide.with(getApplicationContext())
                 .load(fotoPerfil)
+                .signature((new StringSignature(String.valueOf(System.currentTimeMillis()))))
                 .into(fotoDeFace);
 
         buscarOferta(url);
