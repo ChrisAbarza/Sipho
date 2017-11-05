@@ -13,6 +13,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/fondoprincipal"
         tools:context="com.example.chris.sipho.LoginActivity"
         tools:layout_editor_absoluteY="81dp">
 
