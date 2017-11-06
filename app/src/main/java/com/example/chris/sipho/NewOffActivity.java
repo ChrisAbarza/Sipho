@@ -156,7 +156,10 @@ public class NewOffActivity extends AppCompatActivity implements AdapterView.OnI
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         TextView myTextCategoria= (TextView) view;
-        categoriaOferta = myTextCategoria.getText().toString();
+        if(view!=null){
+            categoriaOferta = myTextCategoria.getText().toString();
+        }
+
     }
 
     @Override
