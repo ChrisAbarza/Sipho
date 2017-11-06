@@ -45,15 +45,16 @@
 
     <EditText
         android:id="@+id/editTextCrear"
-        android:layout_width="wrap_content"
+        android:layout_width="273dp"
         android:layout_height="50dp"
         android:layout_marginBottom="8dp"
         android:layout_marginTop="8dp"
-        android:background="@drawable/fondotext1"
+        android:background="@drawable/fondotext2"
         android:ems="10"
         android:hint="Ingresa nombre de usuario"
         android:inputType="textPersonName"
         android:maxLength="20"
+        android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintLeft_toLeftOf="parent"

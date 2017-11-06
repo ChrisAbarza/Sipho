@@ -184,7 +184,7 @@
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:layout_marginTop="10dp"
-        android:background="@drawable/fondoitems1"
+        android:background="@drawable/fondocategoria1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.349"
         app:layout_constraintLeft_toLeftOf="parent"
