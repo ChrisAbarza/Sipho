@@ -33,9 +33,13 @@ public class DialogoGustos extends DialogFragment {
                 String b = cargar.get(i).toString();
                 int a = Integer.valueOf(b);
                 selec[a]=true;
+                mSelectedItems.add(a);
             }
         }else{
             Arrays.fill(selec,true);
+            for(int v=0;v<9;v++){
+                mSelectedItems.add(v);
+            }
         }
 
         // Set the dialog title
