@@ -19,6 +19,8 @@
     <string name="previsualizar">Previsualizar</string>
     <string name="cancelar">Cancelar</string>
     <string name="todo">TODO</string>
+    <string name="gusto">Selecciona tus gustos</string>
+    <string name="aceptar">Aceptar</string>
 
 
 </resources>
