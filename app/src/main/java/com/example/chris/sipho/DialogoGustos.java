@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -28,7 +29,7 @@ public class DialogoGustos extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         TinyDB tinydb = new TinyDB(getActivity());
         cargar=tinydb.getListInt("SIPHO_GUSTOS");
-        if(cargar!=null){
+        if(cargar.size()!=0){
             for (int i=0;i<cargar.size();i++){
                 String b = cargar.get(i).toString();
                 int a = Integer.valueOf(b);
@@ -39,6 +40,7 @@ public class DialogoGustos extends DialogFragment {
             Arrays.fill(selec,true);
             for(int v=0;v<9;v++){
                 mSelectedItems.add(v);
+
             }
         }
 
@@ -67,7 +69,8 @@ public class DialogoGustos extends DialogFragment {
                     public void onClick(DialogInterface dialog, int id) {
                         TinyDB tinydb2 = new TinyDB(getActivity());
                         tinydb2.putListInt("SIPHO_GUSTOS",mSelectedItems);
-
+                        Intent intent = new Intent(getActivity(), MainActivity.class);
+                        startActivity(intent);
 
                     }
                 })

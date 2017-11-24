@@ -85,6 +85,7 @@ public class MainActivity extends AppCompatActivity
     double lat = 0.0;
     double lng = 0.0;
     String usrid ;
+    List cargar = new ArrayList();
 
     private ProfileTracker profileTracker;
 
@@ -274,7 +275,51 @@ public class MainActivity extends AppCompatActivity
     public void onMapReady(GoogleMap googleMap) {
         map = googleMap;
         miUbicacion();
+        TinyDB tinydb2 = new TinyDB(this);
+        cargar=tinydb2.getListInt("SIPHO_GUSTOS");
+        String[] argusto=getResources().getStringArray(R.array.opcionesCategoria);
+        int largo = cargar.size();
         String url = meto.getBdUrl()+"cargarMarcador.php";
+        switch (largo){
+            case 0:
+                 url = meto.getBdUrl()+"cargarMarcador.php";
+                break;
+            case 1:
+                 url = meto.getBdUrl()+"cargarMarcador1.php?1="+argusto[Integer.valueOf(cargar.get(0).toString())];
+                break;
+            case 2:
+                 url = meto.getBdUrl()+"cargarMarcador2.php?1="+argusto[Integer.valueOf(cargar.get(0).toString())]+"&2="+argusto[Integer.valueOf(cargar.get(1).toString())];
+                break;
+            case 3:
+                url = meto.getBdUrl()+"cargarMarcador3.php?1="+argusto[Integer.valueOf(cargar.get(0).toString())]+"&2="+argusto[Integer.valueOf(cargar.get(1).toString())]+"&3="+argusto[Integer.valueOf(cargar.get(2).toString())];
+                break;
+            case 4:
+                //url = meto.getBdUrl()+"cargarMarcador4.php?1="+argusto[Integer.valueOf(cargar.get(0).toString())]+"&2="+argusto[Integer.valueOf(cargar.get(1).toString())]+"&3="+argusto[Integer.valueOf(cargar.get(2).toString())]
+                 //       +"&4="+argusto[Integer.valueOf(cargar.get(3).toString())];
+
+                break;
+            case 5:
+                url = meto.getBdUrl()+"cargarMarcador5.php?1="+argusto[Integer.valueOf(cargar.get(0).toString())]+"&2="+argusto[Integer.valueOf(cargar.get(1).toString())]+"&3="+argusto[Integer.valueOf(cargar.get(2).toString())]
+                        +"&4="+argusto[Integer.valueOf(cargar.get(3).toString())]+"&5="+argusto[Integer.valueOf(cargar.get(4).toString())];
+                break;
+            case 6:
+                url = meto.getBdUrl()+"cargarMarcador6.php?1="+argusto[Integer.valueOf(cargar.get(0).toString())]+"&2="+argusto[Integer.valueOf(cargar.get(1).toString())]+"&3="+argusto[Integer.valueOf(cargar.get(2).toString())]
+                        +"&4="+argusto[Integer.valueOf(cargar.get(3).toString())]+"&5="+argusto[Integer.valueOf(cargar.get(4).toString())]+"&6="+argusto[Integer.valueOf(cargar.get(5).toString())];
+                break;
+            case 7:
+                url = meto.getBdUrl()+"cargarMarcador7.php?1="+argusto[Integer.valueOf(cargar.get(0).toString())]+"&2="+argusto[Integer.valueOf(cargar.get(1).toString())]+"&3="+argusto[Integer.valueOf(cargar.get(2).toString())]
+                        +"&4="+argusto[Integer.valueOf(cargar.get(3).toString())]+"&5="+argusto[Integer.valueOf(cargar.get(4).toString())]+"&6="+argusto[Integer.valueOf(cargar.get(5).toString())]
+                        +"&7="+argusto[Integer.valueOf(cargar.get(6).toString())];
+                break;
+            case 8:
+                url = meto.getBdUrl()+"cargarMarcador8.php?1="+argusto[Integer.valueOf(cargar.get(0).toString())]+"&2="+argusto[Integer.valueOf(cargar.get(1).toString())]+"&3="+argusto[Integer.valueOf(cargar.get(2).toString())]
+                        +"&4="+argusto[Integer.valueOf(cargar.get(3).toString())]+"&5="+argusto[Integer.valueOf(cargar.get(4).toString())]+"&6="+argusto[Integer.valueOf(cargar.get(5).toString())]
+                        +"&7="+argusto[Integer.valueOf(cargar.get(6).toString())]+"&8="+argusto[Integer.valueOf(cargar.get(7).toString())];
+                break;
+            case 9:
+                url = meto.getBdUrl()+"cargarMarcador.php";
+                break;
+        }
 
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
@@ -295,6 +340,7 @@ public class MainActivity extends AppCompatActivity
 
 
         }
+        url = url.replaceAll(" ","%20");
         cargarMarcadores(url);
 
     }
