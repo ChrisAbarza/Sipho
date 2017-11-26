@@ -1,6 +1,8 @@
 package com.example.chris.sipho;
 
 import android.Manifest;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -77,15 +79,16 @@ public class MainActivity extends AppCompatActivity
     public static final String IMGUSUARIO = "imgUsuario";
     public static final String NOMBRECOMPLETO ="nombreCompleto" ;
     private GoogleMap map;
-    private ImageView photoImageView;
-    private TextView nameTextView;
+    private ImageView photoImageView,imageDialog;
+    private TextView nameTextView,nomDialog,precDialog,descDialog,cancelDialog,showDialog;
     private TextView idTextView;
     private final static int MY_PERMISSION_FINE_LOCATION = 101;
     JSONArray ja;
     private String usrname;
     double lat = 0.0;
     double lng = 0.0;
-    String usrid ;
+    Dialog dialog;
+    String usrid,idOfertaDialog ;
     List cargar = new ArrayList();
 
     private ProfileTracker profileTracker;
@@ -152,6 +155,7 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -166,7 +170,11 @@ public class MainActivity extends AppCompatActivity
         mapFragment.getMapAsync(this);
 
 
+
+
     }
+
+
 
 
     private void goLoginScreen() {
@@ -295,8 +303,8 @@ public class MainActivity extends AppCompatActivity
                 url = meto.getBdUrl()+"cargarMarcador3.php?1="+argusto[Integer.valueOf(cargar.get(0).toString())]+"&2="+argusto[Integer.valueOf(cargar.get(1).toString())]+"&3="+argusto[Integer.valueOf(cargar.get(2).toString())];
                 break;
             case 4:
-                //url = meto.getBdUrl()+"cargarMarcador4.php?1="+argusto[Integer.valueOf(cargar.get(0).toString())]+"&2="+argusto[Integer.valueOf(cargar.get(1).toString())]+"&3="+argusto[Integer.valueOf(cargar.get(2).toString())]
-                 //       +"&4="+argusto[Integer.valueOf(cargar.get(3).toString())];
+                url = meto.getBdUrl()+"cargarMarcador4.php?1="+argusto[Integer.valueOf(cargar.get(0).toString())]+"&2="+argusto[Integer.valueOf(cargar.get(1).toString())]+"&3="+argusto[Integer.valueOf(cargar.get(2).toString())]
+                      +"&4="+argusto[Integer.valueOf(cargar.get(3).toString())];
 
                 break;
             case 5:
@@ -532,7 +540,10 @@ public class MainActivity extends AppCompatActivity
             map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                 @Override
                 public boolean onMarkerClick(Marker marker) {
-                    String a = marker.getSnippet();
+
+                    String idOferta = marker.getSnippet();
+
+                    buscarDialogoInfo(idOferta);
                     return false;
                 }
             });
@@ -540,6 +551,106 @@ public class MainActivity extends AppCompatActivity
         }
 
     }
+
+    private void buscarDialogoInfo(String idOferta) {
+        String url=meto.getBdUrl()+"cargarDialogInfo.php?id="+idOferta;
+        Log.i("url",""+url);
+        RequestQueue queue = Volley.newRequestQueue(this);
+        StringRequest stringRequest =  new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                response = response.replace("][",",");
+                if(response.length()>0){
+                    try {
+                        JSONArray mja = new JSONArray(response);
+                        Log.i("sizejson",""+mja.length());
+                        cargarDialogoInfo(mja);
+
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        Toast.makeText(getApplicationContext(),"Error "+e,Toast.LENGTH_LONG).show();
+                    }catch (NullPointerException s){
+                        s.printStackTrace();
+
+                    }
+
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(MainActivity.this, "Ops Error 1"+error, Toast.LENGTH_SHORT).show();
+
+            }
+        });
+        queue.add(stringRequest);
+    }
+
+    private void cargarDialogoInfo(JSONArray mja) {
+        ArrayList<String> lista = new ArrayList<>();
+        String image="",nombre="",precio="",desc="",id="";
+        for (int i=0;i<mja.length();i+=5){
+            try {
+                lista.add(mja.getString(i)+",æè"+mja.getString(i+1)+",æè"+mja.getString(i+2)+",æè"+mja.getString(i+3)+",æè"+mja.getString(i+4));
+            }catch (JSONException e){
+
+            }
+            for (int m=0;m<lista.size();m++){
+                String[] lista2 = lista.get(m).split(",æè");
+                nombre = lista2[0].toString();
+                precio = lista2[1].toString();
+                desc = lista2[2].toString();
+                image = lista2[3].toString();
+                id = lista2[4].toString();
+
+            }
+
+        }
+        mostrarDialogoInfo(nombre,precio,desc,image,id);
+
+    }
+
+    private void mostrarDialogoInfo(String nombre, String precio, String desc, String image, String id) {
+        final String idsd = id;
+        AlertDialog.Builder mBuilder = new AlertDialog.Builder(MainActivity.this);
+        View mView = getLayoutInflater().inflate(R.layout.dialogo_info, null);
+        mBuilder.setView(mView);
+        imageDialog = (ImageView) mView.findViewById(R.id.imageViewDialog);
+        nomDialog = (TextView) mView.findViewById(R.id.textViewNomDialog);
+        precDialog = (TextView) mView.findViewById(R.id.textViewPreDialog);
+        descDialog = (TextView) mView.findViewById(R.id.textViewDescDialog);
+        cancelDialog = (TextView) mView.findViewById(R.id.cancelTxt);
+        showDialog = (TextView) mView.findViewById(R.id.showTxt);
+        final AlertDialog dialog = mBuilder.create();
+
+        cancelDialog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        showDialog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MainActivity.this, ""+idsd, Toast.LENGTH_SHORT).show();
+            }
+        });
+        nomDialog.setText(nombre);
+        precDialog.setText("$"+precio);
+        descDialog.setText(desc);
+
+        Glide.with(getApplicationContext())
+                .load(image)
+                .signature((new StringSignature(String.valueOf(System.currentTimeMillis()))))
+                .into(imageDialog);
+
+
+        dialog.show();
+
+    }
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
