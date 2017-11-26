@@ -50,6 +50,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.json.JSONArray;
@@ -434,9 +435,9 @@ public class MainActivity extends AppCompatActivity
     }
     private void insertarMarcadores(JSONArray mja){
         ArrayList<String> lista = new ArrayList<>();
-        for (int i=0;i<mja.length();i+=4){
+        for (int i=0;i<mja.length();i+=5){
             try {
-                  lista.add(mja.getString(i)+",æè"+mja.getString(i+1)+",æè"+mja.getString(i+2)+",æè"+mja.getString(i+3));
+                  lista.add(mja.getString(i)+",æè"+mja.getString(i+1)+",æè"+mja.getString(i+2)+",æè"+mja.getString(i+3)+",æè"+mja.getString(i+4));
             }catch (JSONException e){
 
             }
@@ -449,7 +450,9 @@ public class MainActivity extends AppCompatActivity
                     map.addMarker(new MarkerOptions()
                             .icon(BitmapDescriptorFactory.fromResource(R.drawable.comida))
                             .title(slatlng[0])
+                            .snippet(slatlng[4].toString())
                             .position(latLng)
+
 
                     );
                     break;
@@ -457,6 +460,7 @@ public class MainActivity extends AppCompatActivity
                     map.addMarker(new MarkerOptions()
                             .icon(BitmapDescriptorFactory.fromResource(R.drawable.copete))
                             .title(slatlng[0])
+                            .snippet(slatlng[4].toString())
                             .position(latLng)
 
                     );
@@ -465,6 +469,7 @@ public class MainActivity extends AppCompatActivity
                     map.addMarker(new MarkerOptions()
                             .icon(BitmapDescriptorFactory.fromResource(R.drawable.eventos))
                             .title(slatlng[0])
+                            .snippet(slatlng[4].toString())
                             .position(latLng)
 
                     );
@@ -473,6 +478,7 @@ public class MainActivity extends AppCompatActivity
                     map.addMarker(new MarkerOptions()
                             .icon(BitmapDescriptorFactory.fromResource(R.drawable.servicio))
                             .title(slatlng[0])
+                            .snippet(slatlng[4].toString())
                             .position(latLng)
 
                     );
@@ -481,6 +487,7 @@ public class MainActivity extends AppCompatActivity
                     map.addMarker(new MarkerOptions()
                             .icon(BitmapDescriptorFactory.fromResource(R.drawable.moda))
                             .title(slatlng[0])
+                            .snippet(slatlng[4].toString())
                             .position(latLng)
 
                     );
@@ -489,6 +496,7 @@ public class MainActivity extends AppCompatActivity
                     map.addMarker(new MarkerOptions()
                             .icon(BitmapDescriptorFactory.fromResource(R.drawable.electrodomesticos))
                             .title(slatlng[0])
+                            .snippet(slatlng[4].toString())
                             .position(latLng)
 
                     );
@@ -497,6 +505,7 @@ public class MainActivity extends AppCompatActivity
                     map.addMarker(new MarkerOptions()
                             .icon(BitmapDescriptorFactory.fromResource(R.drawable.rueda))
                             .title(slatlng[0])
+                            .snippet(slatlng[4].toString())
                             .position(latLng)
 
                     );
@@ -505,6 +514,7 @@ public class MainActivity extends AppCompatActivity
                     map.addMarker(new MarkerOptions()
                             .icon(BitmapDescriptorFactory.fromResource(R.drawable.casa))
                             .title(slatlng[0])
+                            .snippet(slatlng[4].toString())
                             .position(latLng)
 
                     );
@@ -513,11 +523,19 @@ public class MainActivity extends AppCompatActivity
                     map.addMarker(new MarkerOptions()
                             .icon(BitmapDescriptorFactory.fromResource(R.drawable.otros))
                             .title(slatlng[0])
+                            .snippet(slatlng[4].toString())
                             .position(latLng)
 
                     );
                     break;
             }
+            map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                @Override
+                public boolean onMarkerClick(Marker marker) {
+                    String a = marker.getSnippet();
+                    return false;
+                }
+            });
 
         }
 
