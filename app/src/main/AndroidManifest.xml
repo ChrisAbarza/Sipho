@@ -55,6 +55,7 @@
             android:parentActivityName=".MisPublicaciones" />
         <activity android:name=".PreviewModificar" />
         <activity android:name=".BuscarSeguido" android:parentActivityName=".MainActivity"></activity>
+        <activity android:name=".VerOfertaDialog"></activity>
     </application>
 
 </manifest>

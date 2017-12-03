@@ -635,6 +635,10 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 Toast.makeText(MainActivity.this, ""+idsd, Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(MainActivity.this, VerOfertaDialog.class);
+                intent.putExtra("idOferta", idsd);
+                startActivity(intent);
+
             }
         });
         nomDialog.setText(nombre);
