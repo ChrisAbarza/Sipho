@@ -77,6 +77,8 @@ public class VerOfertaDialog extends AppCompatActivity implements OnMapReadyCall
 
         buscarDatosOferta(URL);
 
+        Lista = new ArrayList<Comentario>();
+
         valoracion= (Spinner) findViewById(R.id.spinnerComentario);
         editTextComentario=(EditText) findViewById(R.id.editTextComentario);
         btnComentar=(Button)findViewById(R.id.buttonComentar);
@@ -226,13 +228,16 @@ public class VerOfertaDialog extends AppCompatActivity implements OnMapReadyCall
 
     private void prepararList(JSONArray mja) {
         Lista.clear();
+        Toast.makeText(this, "1", Toast.LENGTH_SHORT).show();
         ArrayList<String> lista = new ArrayList<>();
         for (int i=0;i<mja.length();i+=6){
             try {
                 lista.add(mja.getString(i)+",æè"+mja.getString(i+1)+",æè"+mja.getString(i+2)+",æè"+mja.getString(i+3)+",æè"+mja.getString(i+4)+",æè"+mja.getString(i+5));
             }catch (JSONException e){
+                Toast.makeText(this, ""+e, Toast.LENGTH_SHORT).show();
 
             }
+
         }
         for (int m=0;m<lista.size();m++) {
             String[] slista = lista.get(m).split(",æè");
@@ -242,6 +247,7 @@ public class VerOfertaDialog extends AppCompatActivity implements OnMapReadyCall
         AdaptadorComentarios miadaptador = new AdaptadorComentarios(getApplicationContext(),Lista);
         listaComent.setAdapter(miadaptador);
         scroll.scrollTo(0,0);
+        Toast.makeText(this, "11111", Toast.LENGTH_SHORT).show();
 
     }
 
