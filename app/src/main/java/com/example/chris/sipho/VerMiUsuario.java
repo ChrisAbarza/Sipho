@@ -1,15 +1,13 @@
 package com.example.chris.sipho;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,11 +29,11 @@ import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-import static android.provider.ContactsContract.CommonDataKinds.Website.URL;
-import static com.example.chris.sipho.R.id.idTextView;
+/**
+ * Created by salv8 on 03/12/2017.
+ */
 
-public class VerUsuario extends AppCompatActivity {
-
+public class VerMiUsuario extends AppCompatActivity {
     CircleImageView fotoDeFace;
     TextView nombreCompleto,nombreUsuario,ofertasTotales,seguidores,seguidos;
     ListView listViewOfertas;
@@ -46,13 +44,12 @@ public class VerUsuario extends AppCompatActivity {
     Profile profile= Profile.getCurrentProfile();
     Button btnSeguir;
 
-    @Override
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ver_usuario);
 
         Intent intent = getIntent();
-
 
         fotoDeFace = (CircleImageView) findViewById(R.id.circleImageViewVerUsr);
         nombreCompleto = (TextView) findViewById(R.id.textViewNomComVerUsr);
@@ -63,29 +60,23 @@ public class VerUsuario extends AppCompatActivity {
         listViewOfertas = (ListView) findViewById(R.id.lstOfertasVerUsr);
         btnSeguir = (Button) findViewById(R.id.buttonSeguirUsr);
 
-        fotoPerfil = intent.getStringExtra("fotoPerfil");
-        nombreFace = intent.getStringExtra("nombreCompleto");
-        usrFace = intent.getStringExtra("usrName");
-        idUsr = intent.getStringExtra("idUsuario");
+        btnSeguir.setVisibility(View.GONE);
+
+        fotoPerfil = profile.getProfilePictureUri(100, 100).toString();
+        nombreFace = profile.getName();
+        usrFace = intent.getStringExtra("nombre");
+        idUsr = profile.getId();
 
         final Metodos met = new Metodos();
         Lista1 = new ArrayList<Oferta>();
         String url=met.getBdUrl()+"buscarPorUsuario.php?usr="+idUsr;
         urlPubli = met.getBdUrl()+"contarPublicaciones.php?idUsuario="+idUsr;
-        urlSiSigue = met.getBdUrl()+"consultaSeguidor.php?idSeguido="+idUsr+"&idSeguidor="+profile.getId();
         String urlSiguiendo=met.getBdUrl()+"contarSiguiendo.php?idUsuario="+idUsr;
         String urlSeguido=met.getBdUrl()+"contarSeguido.php?idUsuario="+idUsr;
 
-        if(idUsr.equals(profile.getId())){
-            btnSeguir.setVisibility(View.GONE);
-        }else{
-            btnSeguir.setVisibility(View.VISIBLE);
-        }
-        loSigue(urlSiSigue);
         contarPublicaciones(urlPubli);
         contarSiguiendo(urlSiguiendo);
         contarSeguido(urlSeguido);
-
 
         nombreCompleto.setText(nombreFace);
         nombreUsuario.setText(usrFace);
@@ -96,31 +87,6 @@ public class VerUsuario extends AppCompatActivity {
                 .into(fotoDeFace);
 
         buscarOferta(url);
-        switch (bandera){
-            case 0:
-                btnSeguir.setBackgroundResource(R.drawable.noseguido);
-                break;
-            case 1:
-                btnSeguir.setBackgroundResource(R.drawable.seguido);
-                break;
-        }
-
-        btnSeguir.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                switch (bandera){
-                    case 0:
-                        urlSeguir="https://salv8.000webhostapp.com/seguirUsuario.php?seguido="+idUsr+"&seguidor="+profile.getId();
-                        bandera=1;
-                        break;
-                    case 1:
-                        urlSeguir="https://salv8.000webhostapp.com/dejarSeguir.php?seguido="+idUsr+"&seguidor="+profile.getId();
-                        bandera=0;
-                        break;
-                }
-                ejecutarSeguir(urlSeguir);
-            }
-        });
 
         listViewOfertas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -132,11 +98,10 @@ public class VerUsuario extends AppCompatActivity {
                 startActivity(ir);
             }
         });
-
         seguidores.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(VerUsuario.this, VerInformacion.class);
+                Intent intent = new Intent(VerMiUsuario.this, VerInformacion.class);
                 intent.putExtra("idUsuario",idUsr);
                 intent.putExtra("tipo","seguidor");
                 startActivity(intent);
@@ -146,7 +111,7 @@ public class VerUsuario extends AppCompatActivity {
         seguidos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(VerUsuario.this, VerInformacion.class);
+                Intent intent = new Intent(VerMiUsuario.this, VerInformacion.class);
                 intent.putExtra("idUsuario",idUsr);
                 intent.putExtra("tipo","seguidos");
                 startActivity(intent);
@@ -156,7 +121,6 @@ public class VerUsuario extends AppCompatActivity {
 
 
     }
-
     private void contarSeguido(String URL) {
         Log.i("url",""+URL);
 
@@ -180,7 +144,7 @@ public class VerUsuario extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(VerUsuario.this, "Ops Error", Toast.LENGTH_SHORT).show();
+                Toast.makeText(VerMiUsuario.this, "Ops Error", Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -209,45 +173,13 @@ public class VerUsuario extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(VerUsuario.this, "Ops Error", Toast.LENGTH_SHORT).show();
+                Toast.makeText(VerMiUsuario.this, "Ops Error", Toast.LENGTH_SHORT).show();
                 seguidos.setText("0");
 
             }
         });
         queue.add(stringRequest);
     }
-
-    private void ejecutarSeguir(String URL) {
-        Log.i("url",""+URL);
-
-        RequestQueue queue = Volley.newRequestQueue(this);
-        StringRequest stringRequest =  new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                switch (bandera){
-                    case 0:
-                        btnSeguir.setBackgroundResource(R.drawable.noseguido);
-                        Toast.makeText(VerUsuario.this, "dejar de seguir", Toast.LENGTH_SHORT).show();
-                        break;
-
-                    case 1:
-                        btnSeguir.setBackgroundResource(R.drawable.seguido);
-                        Toast.makeText(VerUsuario.this, "Siguiendo", Toast.LENGTH_SHORT).show();
-                        break;
-                }
-
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(VerUsuario.this, "Ops Error", Toast.LENGTH_SHORT).show();
-
-            }
-        });
-        queue.add(stringRequest);
-    }
-
     private void contarPublicaciones (String URL){
         Log.i("url",""+URL);
 
@@ -272,41 +204,7 @@ public class VerUsuario extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(VerUsuario.this, "Ops Error", Toast.LENGTH_SHORT).show();
-
-            }
-        });
-        queue.add(stringRequest);
-
-    }
-    private void loSigue (String URL){
-        Log.i("url",""+URL);
-
-        RequestQueue queue = Volley.newRequestQueue(this);
-        StringRequest stringRequest =  new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-
-                try {
-                    JSONArray ja ;
-                    ja = new JSONArray(response);
-                    btnSeguir.setBackgroundResource(R.drawable.seguido);
-
-                    bandera = 1;
-
-
-
-                } catch (JSONException e) {
-                    btnSeguir.setBackgroundResource(R.drawable.noseguido);
-                    bandera = 0;
-                }
-
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(VerUsuario.this, "Ops Error", Toast.LENGTH_SHORT).show();
+                Toast.makeText(VerMiUsuario.this, "Ops Error", Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -341,7 +239,7 @@ public class VerUsuario extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(VerUsuario.this, "Ops Error 1"+error, Toast.LENGTH_SHORT).show();
+                Toast.makeText(VerMiUsuario.this, "Ops Error 1"+error, Toast.LENGTH_SHORT).show();
 
             }
         });

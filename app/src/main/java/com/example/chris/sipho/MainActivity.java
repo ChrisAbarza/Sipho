@@ -245,7 +245,8 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_perfil) {
-            Intent intent = new Intent(this, MainActivity.class);
+            Intent intent = new Intent(this, VerMiUsuario.class);
+            intent.putExtra("nombre",idTextView.getText().toString());
             startActivity(intent);
         } else if (id == R.id.nav_categoria) {
             Intent intent = new Intent(this, BuscarCategoria.class);
@@ -634,7 +635,6 @@ public class MainActivity extends AppCompatActivity
         showDialog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainActivity.this, ""+idsd, Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(MainActivity.this, VerOfertaDialog.class);
                 intent.putExtra("idOferta", idsd);
                 startActivity(intent);

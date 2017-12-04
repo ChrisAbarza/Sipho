@@ -270,6 +270,8 @@ public class VerOferta extends AppCompatActivity implements OnMapReadyCallback, 
                     public void onResponse(String s) {
                         Toast.makeText(VerOferta.this, "Correcto!", Toast.LENGTH_LONG).show();
                         editTextComentario.setText("");
+                        String url2=met.getBdUrl()+"consultarComent.php?oferta="+idOferta;
+                        buscarComentario(url2);
                     }
                 },
                 new Response.ErrorListener() {

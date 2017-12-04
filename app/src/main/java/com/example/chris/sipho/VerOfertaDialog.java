@@ -157,6 +157,8 @@ public class VerOfertaDialog extends AppCompatActivity implements OnMapReadyCall
                     public void onResponse(String s) {
                         Toast.makeText(VerOfertaDialog.this, "Correcto!", Toast.LENGTH_LONG).show();
                         editTextComentario.setText("");
+                        String url2=met.getBdUrl()+"consultarComent.php?oferta="+idOferta;
+                        buscarComentario(url2);
                     }
                 },
                 new Response.ErrorListener() {
@@ -228,7 +230,6 @@ public class VerOfertaDialog extends AppCompatActivity implements OnMapReadyCall
 
     private void prepararList(JSONArray mja) {
         Lista.clear();
-        Toast.makeText(this, "1", Toast.LENGTH_SHORT).show();
         ArrayList<String> lista = new ArrayList<>();
         for (int i=0;i<mja.length();i+=6){
             try {
@@ -247,7 +248,6 @@ public class VerOfertaDialog extends AppCompatActivity implements OnMapReadyCall
         AdaptadorComentarios miadaptador = new AdaptadorComentarios(getApplicationContext(),Lista);
         listaComent.setAdapter(miadaptador);
         scroll.scrollTo(0,0);
-        Toast.makeText(this, "11111", Toast.LENGTH_SHORT).show();
 
     }
 
