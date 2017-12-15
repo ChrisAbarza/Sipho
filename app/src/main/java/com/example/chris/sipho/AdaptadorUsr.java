@@ -41,7 +41,7 @@ public class AdaptadorUsr extends BaseAdapter {
 
     @Override
     public long getItemId(int position) {
-        int i= Integer.valueOf(ListaUsuarios.get(position).getId());
+        long i= Long.valueOf(ListaUsuarios.get(position).getId());
         return i;
     }
 
