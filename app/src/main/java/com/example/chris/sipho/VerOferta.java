@@ -124,7 +124,7 @@ public class VerOferta extends AppCompatActivity implements OnMapReadyCallback, 
 
         Glide.with(getApplicationContext())
                 .load(off.getImagen())
-                .signature((new StringSignature(String.valueOf(System.currentTimeMillis()))))
+                .signature((new StringSignature(String.valueOf(System.currentTimeMillis()/ (15 * 1000)))))
                 .into(imageViewOferta);
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -330,6 +330,7 @@ public class VerOferta extends AppCompatActivity implements OnMapReadyCallback, 
                             fotoPerfil=slista[1].toString();
                             Glide.with(getApplicationContext())
                                     .load(fotoPerfil)
+                                    .signature((new StringSignature(String.valueOf(System.currentTimeMillis()/ (15 * 1000)))))
                                     .into(imageViewUsuario);
                             loading.dismiss();
 

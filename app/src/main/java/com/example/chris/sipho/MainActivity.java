@@ -199,7 +199,7 @@ public class MainActivity extends AppCompatActivity
 
         Glide.with(getApplicationContext())
                 .load(photoUrl)
-                .signature((new StringSignature(String.valueOf(System.currentTimeMillis()))))
+                .signature((new StringSignature(String.valueOf(System.currentTimeMillis()/ (15 * 1000)))))
                 .into(photoImageView);
     }
 
@@ -647,7 +647,7 @@ public class MainActivity extends AppCompatActivity
 
         Glide.with(getApplicationContext())
                 .load(image)
-                .signature((new StringSignature(String.valueOf(System.currentTimeMillis()))))
+                .signature((new StringSignature(String.valueOf(System.currentTimeMillis()/ (15 * 1000)))))
                 .into(imageDialog);
 
 

@@ -60,7 +60,7 @@ public class AdaptadorUsr extends BaseAdapter {
 
         Glide.with(getApplicationContext())
                 .load(ListaUsuarios.get(position).getImagen())
-                .signature((new StringSignature(String.valueOf(System.currentTimeMillis()))))
+                .signature((new StringSignature(String.valueOf(System.currentTimeMillis()/ (15 * 1000)))))
                 .into(imagenUsuario);
 
         return vista;

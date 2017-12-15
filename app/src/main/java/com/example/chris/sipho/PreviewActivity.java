@@ -97,7 +97,7 @@ public class PreviewActivity extends AppCompatActivity implements OnMapReadyCall
 
         Glide.with(getApplicationContext())
                 .load(imgUsuario)
-                .signature((new StringSignature(String.valueOf(System.currentTimeMillis()))))
+                .signature((new StringSignature(String.valueOf(System.currentTimeMillis()/ (15 * 1000)))))
                 .into(imageViewPreview);
 
         btnCancelar.setOnClickListener(new View.OnClickListener() {

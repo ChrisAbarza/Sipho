@@ -96,7 +96,7 @@ public class PreviewModificar extends AppCompatActivity implements OnMapReadyCal
                 image = intent.getStringExtra("image");
                 Glide.with(getApplicationContext())
                         .load(image)
-                        .signature((new StringSignature(String.valueOf(System.currentTimeMillis()))))
+                        .signature((new StringSignature(String.valueOf(System.currentTimeMillis()/ (15 * 1000)))))
                         .into(imageViewOfertaPreview);
 
                 break;
@@ -113,6 +113,7 @@ public class PreviewModificar extends AppCompatActivity implements OnMapReadyCal
 
         Glide.with(getApplicationContext())
                 .load(profile.getProfilePictureUri(100,100).toString())
+                .signature((new StringSignature(String.valueOf(System.currentTimeMillis()/ (15 * 1000)))))
                 .into(imageViewPreview);
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()

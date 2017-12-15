@@ -65,7 +65,7 @@ public class AdaptadorComentarios extends BaseAdapter {
 
         Glide.with(getApplicationContext())
                 .load(ListaComentario.get(position).getImg())
-                .signature((new StringSignature(String.valueOf(System.currentTimeMillis()))))
+                .signature((new StringSignature(String.valueOf(System.currentTimeMillis()/ (15 * 1000)))))
                 .into(imgusr);
 
         if(ListaComentario.get(position).getValoracion().equals("Si")){

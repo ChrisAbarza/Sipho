@@ -331,12 +331,12 @@ public class VerOfertaDialog extends AppCompatActivity implements OnMapReadyCall
 
                         Glide.with(getApplicationContext())
                                 .load(imgOferta)
-                                .signature((new StringSignature(String.valueOf(System.currentTimeMillis()))))
+                                .signature((new StringSignature(String.valueOf(System.currentTimeMillis()/ (15 * 1000)))))
                                 .into(imageViewOferta);
 
                         Glide.with(getApplicationContext())
                                 .load(fotoPerfil)
-                                .signature((new StringSignature(String.valueOf(System.currentTimeMillis()))))
+                                .signature((new StringSignature(String.valueOf(System.currentTimeMillis()/ (15 * 1000)))))
                                 .into(imageViewUsuario);
 
                         loading.dismiss();

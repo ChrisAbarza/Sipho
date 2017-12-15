@@ -83,7 +83,7 @@ public class ModificarOffActivity extends AppCompatActivity implements AdapterVi
 
         Glide.with(getApplicationContext())
                 .load(off.getImagen())
-                .signature((new StringSignature(String.valueOf(System.currentTimeMillis()))))
+                .signature((new StringSignature(String.valueOf(System.currentTimeMillis()/ (15 * 1000)))))
                 .into(imageView);
 
         setupActionBar();

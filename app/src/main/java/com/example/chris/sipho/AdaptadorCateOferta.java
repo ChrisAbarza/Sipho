@@ -72,7 +72,7 @@ public class AdaptadorCateOferta extends BaseAdapter {
 
         Glide.with(getApplicationContext())
                .load(ListaOfertas.get(position).getImagen())
-                .signature((new StringSignature(String.valueOf(System.currentTimeMillis()))))
+                .signature((new StringSignature(String.valueOf(System.currentTimeMillis()/ (15 * 1000)))))
                .into(imagenOferta);
 
         return vista;

@@ -83,7 +83,7 @@ public class VerMiUsuario extends AppCompatActivity {
 
         Glide.with(getApplicationContext())
                 .load(fotoPerfil)
-                .signature((new StringSignature(String.valueOf(System.currentTimeMillis()))))
+                .signature((new StringSignature(String.valueOf(System.currentTimeMillis()/ (15 * 1000)))))
                 .into(fotoDeFace);
 
         buscarOferta(url);
