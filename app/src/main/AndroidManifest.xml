@@ -60,6 +60,7 @@
         <activity android:name=".VerOfertaDialog" />
         <activity android:name=".VerMiUsuario" />
         <activity android:name=".VerInformacion"></activity>
+        <activity android:name=".BuscarPalabra" android:parentActivityName=".MainActivity"></activity>
     </application>
 
 </manifest>
