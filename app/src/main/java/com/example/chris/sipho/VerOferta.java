@@ -138,10 +138,21 @@ public class VerOferta extends AppCompatActivity implements OnMapReadyCallback, 
         btnComentar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String coment = editTextComentario.getText().toString();
+                if(coment.isEmpty() || coment.length() <= 3){
+                    if(coment.isEmpty()){
+                        editTextComentario.setError("¡Ingresa el comentario!");
+                    }
+                    if(coment.length() <= 3){
+                        editTextComentario.setError("¡Mínimo 4 caracteres!");
+                    }
+                }else{
+                    String URL2=met.getBdUrl()+"insertarComentario.php";
 
-                String URL2=met.getBdUrl()+"insertarComentario.php";
+                    insertarDatos(URL2);
+                }
 
-                insertarDatos(URL2);
+
 
             }
         });

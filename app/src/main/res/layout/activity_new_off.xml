@@ -99,33 +99,20 @@
             app:layout_constraintTop_toBottomOf="@+id/editTextNombre" />
 
         <Button
-            android:id="@+id/buttonChoose"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:background="@drawable/fondobutton1"
-            android:drawableStart="@drawable/ic_menu_gallery"
-            android:text="@string/subir_de_galeria"
-            app:layout_constraintBottom_toTopOf="@+id/imageViewNewOff"
-            app:layout_constraintLeft_toLeftOf="@+id/guideline"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextDescripcion" />
-
-        <Button
             android:id="@+id/buttonChooseCamera"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="4dp"
             android:background="@drawable/fondobutton1"
             android:drawableStart="@drawable/ic_menu_camera"
             android:text="@string/subir_de_camara"
             app:layout_constraintBottom_toTopOf="@+id/imageViewNewOff"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="@+id/guideline"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editTextDescripcion" />
 
         <ImageView
@@ -137,6 +124,7 @@
             android:layout_marginStart="8dp"
             android:layout_weight="1"
             android:contentDescription="@string/todo"
+            android:scaleType="fitCenter"
             app:layout_constraintBottom_toTopOf="@+id/buttonPrevisualizar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"

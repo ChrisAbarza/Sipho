@@ -71,7 +71,6 @@ public class NewOffActivity extends AppCompatActivity implements AdapterView.OnI
         precio = (EditText) findViewById(R.id.editTextPrecio);
         btnCancelar = (Button) findViewById(R.id.buttonCancelarOferta);
         btnprevisualizar = (Button) findViewById(R.id.buttonPrevisualizar);
-        buttonChoose = (Button) findViewById(R.id.buttonChoose);
         imageView  = (ImageView) findViewById(R.id.imageViewNewOff);
         buttonCamera = (Button) findViewById(R.id.buttonChooseCamera);
 
@@ -90,18 +89,7 @@ public class NewOffActivity extends AppCompatActivity implements AdapterView.OnI
         categoria.setAdapter(adapter);
         categoria.setOnItemSelectedListener(this);
 
-        buttonChoose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-               //showFileChooser();
 
-                Intent pickPhoto = new Intent(Intent.ACTION_PICK,
-
-                       android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-               startActivityForResult(pickPhoto , 1);
-
-            }
-        });
         buttonCamera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -121,26 +109,44 @@ public class NewOffActivity extends AppCompatActivity implements AdapterView.OnI
         btnprevisualizar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String nombreoff= nombre.getText().toString();
+                String descoff = descripcion.getText().toString();
+                String preciooff= precio.getText().toString();
 
-                Intent intent = new Intent(NewOffActivity.this, PreviewActivity.class);
-                ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                if(bitmap != null){
+                if(nombreoff.isEmpty() || descoff.isEmpty() || preciooff.isEmpty() ){
+                    if(nombreoff.isEmpty()){
+                        nombre.setError("¡Ingresa el nombre de la oferta!");
+                    }
+                    if(descoff.isEmpty()){
+                        descripcion.setError("¡Ingresa una descripción!");
+                    }
+                    if(preciooff.isEmpty()){
+                        precio.setError("¡Ingresa el precio de la oferta!");
+                    }
 
-                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                }else {
+                    Intent intent = new Intent(NewOffActivity.this, PreviewActivity.class);
+                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                    if(bitmap != null){
+
+                        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                    }
+                    byte[] byteArray = stream.toByteArray();
+                    intent.putExtra(NOMBREOFERTA, nombre.getText().toString());
+                    intent.putExtra(DESCRIPCION, descripcion.getText().toString());
+                    intent.putExtra(PRECIO, precio.getText().toString());
+                    intent.putExtra(NOMBRECOMPLETO2, nombreCompleto);
+                    intent.putExtra(IDUSUARIO2, idUsuario);
+                    intent.putExtra(IMGUSUARIO2, imgUsuario);
+                    intent.putExtra(NOMBREUSUARIO2, nombreUsuario);
+                    intent.putExtra(LATITUD2, lat);
+                    intent.putExtra(LONGITUD2, lng);
+                    intent.putExtra(CATEGORIA,categoriaOferta);
+                    intent.putExtra("bitmap",byteArray);
+                    startActivity(intent);
                 }
-                byte[] byteArray = stream.toByteArray();
-                intent.putExtra(NOMBREOFERTA, nombre.getText().toString());
-                intent.putExtra(DESCRIPCION, descripcion.getText().toString());
-                intent.putExtra(PRECIO, precio.getText().toString());
-                intent.putExtra(NOMBRECOMPLETO2, nombreCompleto);
-                intent.putExtra(IDUSUARIO2, idUsuario);
-                intent.putExtra(IMGUSUARIO2, imgUsuario);
-                intent.putExtra(NOMBREUSUARIO2, nombreUsuario);
-                intent.putExtra(LATITUD2, lat);
-                intent.putExtra(LONGITUD2, lng);
-                intent.putExtra(CATEGORIA,categoriaOferta);
-                intent.putExtra("bitmap",byteArray);
-                startActivity(intent);
+
+
             }
         });
     }

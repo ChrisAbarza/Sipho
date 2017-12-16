@@ -69,7 +69,6 @@ public class ModificarOffActivity extends AppCompatActivity implements AdapterVi
         precio = (EditText) findViewById(R.id.editTextPrecio);
         btnCancelar = (Button) findViewById(R.id.buttonCancelarOferta);
         btnprevisualizar = (Button) findViewById(R.id.buttonPrevisualizar);
-        buttonChoose = (Button) findViewById(R.id.buttonChoose);
         imageView  = (ImageView) findViewById(R.id.imageViewNewOff);
         buttonCamera = (Button) findViewById(R.id.buttonChooseCamera);
 
@@ -93,19 +92,6 @@ public class ModificarOffActivity extends AppCompatActivity implements AdapterVi
 
         btnCancelar.setText("Eliminar");
 
-
-        buttonChoose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //showFileChooser();
-
-                Intent pickPhoto = new Intent(Intent.ACTION_PICK,
-
-                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(pickPhoto , 1);
-
-            }
-        });
         buttonCamera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -125,6 +111,22 @@ public class ModificarOffActivity extends AppCompatActivity implements AdapterVi
         btnprevisualizar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String nombreoff= nombre.getText().toString();
+                String descoff = descripcion.getText().toString();
+                String preciooff= precio.getText().toString();
+
+                if(nombreoff.isEmpty() || descoff.isEmpty() || preciooff.isEmpty() ){
+                    if(nombreoff.isEmpty()){
+                        nombre.setError("¡Ingresa el nombre de la oferta!");
+                    }
+                    if(descoff.isEmpty()){
+                        descripcion.setError("¡Ingresa una descripción!");
+                    }
+                    if(preciooff.isEmpty()){
+                        precio.setError("¡Ingresa el precio de la oferta!");
+                    }
+
+                }else {
                 int bandera;
 
                 Intent intent = new Intent(ModificarOffActivity.this, PreviewModificar.class);
@@ -149,6 +151,7 @@ public class ModificarOffActivity extends AppCompatActivity implements AdapterVi
                 intent.putExtra(CATEGORIA,categoriaOferta);
 
                 startActivity(intent);
+                }
             }
         });
 
