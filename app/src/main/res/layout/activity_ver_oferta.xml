@@ -148,7 +148,7 @@
             android:layout_marginTop="8dp"
             android:text="TextView"
             android:textAlignment="center"
-            android:textColor="@android:color/holo_green_dark"
+            android:textColor="@android:color/holo_red_light"
             android:textSize="14sp"
             android:textStyle="bold|italic"
             app:layout_constraintRight_toLeftOf="@+id/imageViewCateVer"
@@ -211,11 +211,11 @@
         <EditText
             android:id="@+id/editTextComentario"
             style="@style/Widget.AppCompat.EditText"
-            android:layout_width="271dp"
-            android:layout_height="73dp"
+            android:layout_width="234dp"
+            android:layout_height="33dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="52dp"
+            android:layout_marginTop="36dp"
             android:background="@drawable/fondotext2"
             android:ems="10"
             android:hint="Escribe aquí tu comentario"
@@ -223,7 +223,6 @@
             android:maxLength="250"
             android:paddingStart="10dp"
             app:layout_constraintEnd_toStartOf="@+id/guideline4"
-            app:layout_constraintHorizontal_bias="0.505"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/mapVerOferta" />
 
