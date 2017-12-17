@@ -116,7 +116,7 @@ public class BuscarSeguido extends AppCompatActivity implements AdapterView.OnIt
         ActionBar actionBar = getSupportActionBar();
         if(actionBar != null){
             actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setTitle("Segidos");
+            actionBar.setTitle("Seguidos");
         }
     }
 

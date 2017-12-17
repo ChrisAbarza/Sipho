@@ -27,7 +27,7 @@
         android:layout_marginTop="14dp"
         android:text="Christopher Abarza Salvo"
         android:textAlignment="center"
-        android:textColor="@color/cardview_dark_background"
+        android:textColor="#ffff00"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -41,7 +41,7 @@
         android:layout_marginTop="16dp"
         android:text="ChrisAbarza"
         android:textAlignment="center"
-        android:textColor="@color/cardview_dark_background"
+        android:textColor="@android:color/holo_orange_dark"
         android:textSize="18sp"
         android:textStyle="bold|italic"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -87,7 +87,8 @@
             android:text="Publicaciones"
             android:textAlignment="center"
             android:textColor="@color/cardview_dark_background"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/textViewPublicacionesTotales"
@@ -119,7 +120,8 @@
             android:text="Seguidores"
             android:textAlignment="center"
             android:textColor="@color/cardview_dark_background"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/textViewSeguidores"
@@ -154,7 +156,8 @@
             android:text="Seguidos"
             android:textAlignment="center"
             android:textColor="@color/cardview_dark_background"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/textViewSeguidos"

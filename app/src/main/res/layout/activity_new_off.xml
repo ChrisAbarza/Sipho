@@ -62,8 +62,8 @@
 
         <EditText
             android:id="@+id/editTextDescripcion"
-            android:layout_width="454dp"
-            android:layout_height="55dp"
+            android:layout_width="353dp"
+            android:layout_height="45dp"
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
@@ -76,6 +76,7 @@
             android:paddingStart="10dp"
             app:layout_constraintBottom_toTopOf="@+id/imageViewNewOff"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.521"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editTextPrecio"
             app:layout_constraintVertical_bias="0.0" />
@@ -100,8 +101,8 @@
 
         <Button
             android:id="@+id/buttonChooseCamera"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_width="365dp"
+            android:layout_height="49dp"
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="10dp"
             android:layout_marginStart="10dp"

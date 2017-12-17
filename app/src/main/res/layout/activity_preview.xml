@@ -67,9 +67,9 @@
             android:layout_marginLeft="8dp"
             android:layout_marginTop="6dp"
             android:text="TextView"
-            android:textColor="@android:color/black"
+            android:textColor="@android:color/holo_orange_light"
             android:textSize="14sp"
-            android:textStyle="italic"
+            android:textStyle="bold|italic"
             app:layout_constraintLeft_toRightOf="@+id/imageViewUsuarioOferta"
             app:layout_constraintTop_toBottomOf="@+id/textViewNombreUsuario" />
 
@@ -80,7 +80,7 @@
             android:layout_marginLeft="8dp"
             android:layout_marginTop="8dp"
             android:text="TextView"
-            android:textColor="@android:color/black"
+            android:textColor="#ffff00"
             android:textSize="18sp"
             app:layout_constraintLeft_toRightOf="@+id/imageViewUsuarioOferta"
             app:layout_constraintTop_toTopOf="@+id/guideline3" />
@@ -94,8 +94,9 @@
             android:layout_marginTop="8dp"
             android:text="TextView"
             android:textAlignment="center"
-            android:textColor="@android:color/black"
+            android:textColor="#000000"
             android:textSize="24sp"
+            android:textStyle="bold"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageViewUsuarioOferta" />
@@ -170,9 +171,9 @@
             android:layout_marginTop="8dp"
             android:text="TextView"
             android:textAlignment="center"
-            android:textColor="@android:color/holo_orange_light"
-            android:textSize="24sp"
-            android:textStyle="italic"
+            android:textColor="@android:color/holo_green_dark"
+            android:textSize="20sp"
+            android:textStyle="bold|italic"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewPrecio" />
