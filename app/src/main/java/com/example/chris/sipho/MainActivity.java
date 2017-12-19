@@ -268,6 +268,8 @@ public class MainActivity extends AppCompatActivity
             startActivity(intent);
 
         } else if (id == R.id.nav_ayuda) {
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
 
 
         } else if (id == R.id.nav_end_session) {

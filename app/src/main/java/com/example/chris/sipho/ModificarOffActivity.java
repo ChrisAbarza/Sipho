@@ -90,7 +90,7 @@ public class ModificarOffActivity extends AppCompatActivity implements AdapterVi
         categoria.setAdapter(adapter);
         categoria.setOnItemSelectedListener(this);
 
-        btnCancelar.setText("Eliminar");
+        btnCancelar.setText("Cancelar");
 
         buttonCamera.setOnClickListener(new View.OnClickListener() {
             @Override
